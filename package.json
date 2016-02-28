@@ -9,7 +9,9 @@
   },
   "readme": "Generates a express restful application with the mysql connection",
   "license": "MIT",
-  "files": [],
+  "files": [
+    "generators/app"
+  ],
   "keywords": [
     "yeoman-generator",
     "express",
@@ -17,6 +19,8 @@
     "restful"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.22.5"
+    "lodash": "4.5.1",
+    "moment": "2.11.2",
+    "yeoman-generator": "0.22.5"
   }
 }

@@ -1,0 +1,30 @@
+{
+  "name": "<%= appName %>",
+  "version": "0.0.0",
+  "description": "TODO add a description",
+  "title": "<%= appTitle %>",
+  "author": "<%= userName %> <<%= userEmail %>>",
+  "repository": {
+    "type": "git",
+    "url": "<%= githubUrl %>"
+  },
+  "readme": "TODO add a readme description",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "bin": {
+    "<%= shortcut %>": "index.js"
+  },
+  "dependencies": {
+    "bluesky-logger": "0.6.3",
+    "body-parser": "1.15.0",
+    "express": "4.13.4",
+    "lodash": "4.5.1",
+    "minimist": "1.2.0",
+    "mocha": "2.4.5",
+    "moment": "2.11.2",
+    "mysql": "2.10.2",
+    "q": "1.4.1"
+  }
+}

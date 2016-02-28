@@ -1,0 +1,12 @@
+#
+# <%= appTitle %> - <%= githubUrl %>
+#
+# Copyright (c) <%= year %> <%= userName %>
+#
+
+.idea/
+*.iml
+
+node_mobules/
+npm-debug.log
+
