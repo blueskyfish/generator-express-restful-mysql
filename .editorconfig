@@ -1,0 +1,18 @@
+#
+# Generator Express Restful MySQL - https://github.com/blueskyfish/generator-express-restful-mysql.git
+#
+
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+[*.{js,json}]
+indent_style = space
+indent_size = 2
+
+[*.md]
+indent_style = tab
+indent_size = 4

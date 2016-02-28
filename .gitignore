@@ -1,0 +1,9 @@
+#
+# Generator Express Restful MySQL - https://github.com/blueskyfish/generator-express-restful-mysql.git
+#
+
+.idea/
+*.iml
+
+node_modules/
+npm-debug.log
