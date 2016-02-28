@@ -69,9 +69,7 @@ module.exports = generators.Base.extend({
 
 
   paths: function () {
-    this.log('Target: ', this.destinationRoot());
-    this.log('Source: ', this.sourceRoot());
-
+    this.log('Your project path: %s', this.destinationPath());
     var now = moment();
 
     var model = {

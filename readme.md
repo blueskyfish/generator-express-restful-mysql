@@ -76,8 +76,7 @@ Summary:
    Application: monitoring-things -> monitoringThings
    Shortcut:    moth -> MOTH
    Github:      https://github.com/dummy/monitoring-things.git
-Target:  /Users/sarah/Projects/Kirchnerei/Playground/monitoring-things
-Source:  /Users/sarah/Projects/Kirchnerei/Github/generator-exppress-restful-mysql/generators/app/templates
+Your project path: /absolute/path/to/your/project
    create package.json
    create .editorconfig
    create .gitignore
