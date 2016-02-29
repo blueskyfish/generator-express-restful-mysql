@@ -1,5 +1,5 @@
 
-![Generator Express Restful MySQL](logo.png)
+[![Generator Express Restful MySQL](logo.png)](#icon-experience)
 
 # Generator Express Restful MySQL
 
@@ -99,6 +99,12 @@ $
 
 First: read the file `readme.md` in your project.
 
+## History
+
+Version   | Description
+----------|---------------------------------
+0.0.2     | update readme file
+0.0.1     | Initial publishing
 
 ## License
 
@@ -126,5 +132,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+<a name="icon-experience"></a> Logo's of [Icon Experience][iconexperience]
+
 [yeoman]: http://yeoman.io/
 [nodejs]: https://nodejs.com
+[iconexperience]: https://www.iconexperience.com/o_collection
