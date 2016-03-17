@@ -101,10 +101,11 @@ First: read the file `readme.md` in your project.
 
 ## History
 
-Version   | Description
-----------|---------------------------------
-0.0.2     | update readme file
-0.0.1     | Initial publishing
+Version  | date       | Description
+---------|------------|--------------------
+0.1.0    | 2016-03-17 | decouple the encrypt or decrypt call from the settings
+0.0.2    |            | update readme file
+0.0.1    |            | Initial publishing
 
 ## License
 

@@ -12,13 +12,11 @@ var path = require('path');
 var _ = require('lodash');
 var minimist = require('minimist');
 
-var pkg = require('../package.json');
-
 var mParams = minimist(process.argv.slice(2));
 
 var DEFAULT_PORT = 40000;
 var DEFAULT_HOST = 'localhost';
-var DEFAULT_FILENAME = 'settings.json';
+var DEFAULT_FILENAME = 'info.json';
 
 var mSettings = _loadSettings();
 
@@ -85,26 +83,6 @@ module.exports = {
    */
   getHomePath: function () {
     return getHomePath_();
-  },
-
-  getAppName: function () {
-    return pkg.name;
-  },
-
-  getAppTitle: function () {
-    return pkg.title;
-  },
-
-  getAppVersion: function () {
-    return pkg.version;
-  },
-
-  getAppVendor: function () {
-    return pkg.author;
-  },
-
-  getAppDescription: function () {
-    return pkg.description;
   },
 
   /**

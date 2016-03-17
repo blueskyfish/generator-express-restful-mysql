@@ -8,13 +8,11 @@
 
 var crypto = require('crypto');
 
-var settings = require('./settings');
-
 var ALGORITHM = 'aes-256-ctr';
 var TEXT_ENCODE = 'utf8';
 var CRYPT_ENCODE = 'hex';
 
-var SALT = settings.fromEnv("<%= appShort %>_SALT");
+var SALT = process.env["<%= appShort %>_SALT"] || "<%= appShort %>";
 
 module.exports = {
 

@@ -7,7 +7,7 @@
 'use strict';
 
 var crypt = require('./lib/crypt');
-var settings = require('./lib/settings');
+var info = require('./lib/info');
 
 var params = process.argv.slice(2);
 
@@ -21,8 +21,8 @@ if (params.length === 0) {
 
 function header_() {
   console.info('');
-  console.info('%s (%s)', settings.getAppTitle(), settings.getAppVersion());
-  console.info('  %s', settings.getAppVendor());
+  console.info('%s (%s)', info.getAppTitle(), info.getAppVersion());
+  console.info('  %s', info.getAppVendor());
   console.info('');
 }
 
