@@ -1,6 +1,6 @@
 {
   "name": "generator-express-restful-mysql",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generates a express restful application with the mysql connection",
   "author": "BlueSkyFish <blueskyfish@kirchnerei.de>",
   "repository": {

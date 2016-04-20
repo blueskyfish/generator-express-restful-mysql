@@ -65,18 +65,18 @@ $ npm install
 **Example:**
 
 ```sh
-$ yo express-restful-mysql
-? Application name monitoring-things
+$ yo express-restful-mysql Dummy
+? Application name test-app
 ? Your Github name Dummy
 ? Your Email Address dummy@example.com
-? Abbreviation for your application moth
+? Abbreviation for your application test
 Summary:
    UserName:    Dummy -> dummy
    UserEmail:   dummy@example.com
-   Application: monitoring-things -> monitoringThings
-   Shortcut:    moth -> MOTH
-   Github:      https://github.com/dummy/monitoring-things.git
-Your project path: /absolute/path/to/your/project
+   Application: test-app -> testApp
+   Shortcut:    test -> TEST
+   Github:      https://github.com/dummy/test-app.git
+Your project path: /path/to/project/test-app
    create package.json
    create .editorconfig
    create .gitignore
@@ -88,11 +88,14 @@ Your project path: /absolute/path/to/your/project
    create lib/application.js
    create lib/crypt.js
    create lib/db.js
+   create lib/duration.js
+   create lib/eventbus.js
+   create lib/fs-then.js
+   create lib/info.js
    create lib/logger.js
+   create lib/phase.js
+   create lib/runner.js
    create lib/settings.js
-   create lib/shutdown.js
-   create lib/startup.js
-$
 ```
 
 ## Running
@@ -103,7 +106,9 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
-0.1.0    | 2016-03-17 | decouple the encrypt or decrypt call from the settings
+0.2.0    | 2016-04-19 | reedit the start phase and add an eventBus.
+0.1.1    | 2016-04-13 | fixed some bugs and add the man.txt file for helping.
+0.1.0    | 2016-03-17 | decouple the encrypt and decrypt call from the settings
 0.0.2    |            | update readme file
 0.0.1    |            | Initial publishing
 

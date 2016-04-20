@@ -9,24 +9,21 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 
-var settings = require('./settings');
-
-var logger = require('./logger')('<%= shortcut %>');
+var duration = require('./duration');
+var fs = require('./fs-then');
+var info = require('./info');
+var logger = require('./logger').getLogger('<%= shortcut %>');
 
 var app = express();
 
-app.set('title', '<%= appTitle %>');
+app.set('title', info.getAppName);
 
 // Middlewares
 
-// log every request
-app.use(function (req, res, next) {
-  var startTime = Date.now();
-  var url = req.originalUrl;
-  next();
-  logger.debug('[APP] request "', url, '" in ', Date.now() - startTime, ' ms');
-});
+// measure the request time
+app.use(duration.measureTime());
 
+// parse preload into an json object.
 app.use(bodyParser.json());
 
 
@@ -39,11 +36,11 @@ app.use(bodyParser.json());
 
 app.get('/about', function (req, res) {
   res.send({
-    name: settings.getAppName(),
-    title: settings.getAppTitle(),
-    version: settings.getAppVersion(),
-    vendor: settings.getAppVendor(),
-    description: settings.getAppDescription()
+    name: info.getAppName(),
+    title: info.getAppTitle(),
+    version: info.getAppVersion(),
+    vendor: info.getAppVendor(),
+    description: info.getAppDescription()
   });
 });
 

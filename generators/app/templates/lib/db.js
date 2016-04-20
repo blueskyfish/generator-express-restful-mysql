@@ -9,11 +9,11 @@
 var mysql = require('mysql');
 var Q = require('q');
 
-var crypt = require('./crypt');
+var crypt    = require('./crypt');
+var eventBus = require('./eventbus');
+var phase    = require('./phase');
 var settings = require('./settings');
-var logger = require('./logger')('<%= shortcut %>.db');
-
-require('./shutdown').addListener(_shutdown);
+var logger = require('./logger').getLogger('<%= shortcut %>.db');
 
 /**
  * Creates an connection wrapper
@@ -72,12 +72,20 @@ var mPool = mysql.createPool({
   }
 });
 
+// subscribe the event "phase.changed"
+eventBus.subscribe('phase.changed', function () {
+  if (phase.isShutdown()) {
+    logger.info('[DB] shutdown: pool is closing');
+    mPool.end();
+  }
+});
+
 module.exports = {
 
   /**
    * Returns an open connection. In case of error a reason object is return in the promise reject callback.
    *
-   * @return {Q.promise} the promise resolve callback has the parameter from type {@link Conn}
+   * @return {promise} the promise resolve callback has the parameter from type {@link Conn}
    */
   getConnection: function () {
     return getConnection_();
@@ -87,7 +95,7 @@ module.exports = {
    * The query execute a sql statement.
    * @param {string} sql the sql statement
    * @param {object} [values] the parameter entity
-   * @return {Q.promise} the promise resolve callback has the array of rows from the query.
+   * @return {promise} the promise resolve callback has the array of rows from the query.
    */
   query: function (sql, values) {
     return query_(sql, values);
@@ -119,11 +127,6 @@ function query_(sql, values) {
     _handleQueryFunc(done, err, rows);
   });
   return done.promise;
-}
-
-function _shutdown(name) {
-  logger.info('[DB] shutdown "%s": pool is closing', name);
-  mPool.end();
 }
 
 

@@ -12,13 +12,22 @@ var path = require('path');
 var _ = require('lodash');
 var minimist = require('minimist');
 
+var eventBus = require('./eventbus');
+var phase    = require('./phase');
+
 var mParams = minimist(process.argv.slice(2));
 
 var DEFAULT_PORT = 40000;
 var DEFAULT_HOST = 'localhost';
-var DEFAULT_FILENAME = 'info.json';
+var DEFAULT_FILENAME = 'settings.json';
 
-var mSettings = _loadSettings();
+var mSettings = {};
+
+eventBus.subscribe('phase.changed', function () {
+  if (phase.isRunning()) {
+    mSettings = _loadSettings();
+  }
+});
 
 /**
  * @class Settings
@@ -99,11 +108,11 @@ module.exports = {
 function getPort_() {
   if (mParams.port) {
     var port = parseInt(mParams.port, 10);
-    if (isNaN(port)) {
-      return DEFAULT_PORT;
+    if (!isNaN(port)) {
+      return port;
     }
-    return port;
   }
+  console.info('Use the default server port "', DEFAULT_PORT, '" because argument "port" is not found!');
   return DEFAULT_PORT;
 }
 
@@ -130,9 +139,8 @@ function getSetting_(name, defValue) {
 
 function _loadSettings() {
   var filename = path.join(getHomePath_(), DEFAULT_FILENAME);
-  var setting = {};
   if (fs.existsSync(filename)) {
-    setting = require(filename);
+    return require(filename);
   }
-  return setting;
+  throw new Error('Could not found the setting file "' + filename + '"');
 }

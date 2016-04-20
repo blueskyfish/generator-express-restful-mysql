@@ -19,9 +19,9 @@ module.exports = {
   /**
    * Encrypt a value.
    *
-   * @param {string} value
-   * @param {string} [password]
-   * @return {string}
+   * @param {string} value the encrypted value / password
+   * @param {string} [password] the optional password for encrypting.
+   * @return {string} the encrypted value
    */
   encrypt: function (value, password) {
     return encrypt_(value, password);
@@ -29,9 +29,9 @@ module.exports = {
 
   /**
    * Decrypt a value
-   * @param {string} value
-   * @param {string} [password]
-   * @return {string}
+   * @param {string} value the decrypted value / password
+   * @param {string} [password] the optional password for decrypting
+   * @return {string} the decrypted value / password
    */
   decrypt: function (value, password) {
     return decrypt_(value, password);

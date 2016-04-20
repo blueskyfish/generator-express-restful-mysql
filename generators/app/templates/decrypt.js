@@ -11,19 +11,12 @@ var info = require('./lib/info');
 
 var params = process.argv.slice(2);
 
-header_();
+info.showHeader();
 
 if (params.length === 0) {
   usage_();
 } else {
   decrypt(params[0], params[1]);
-}
-
-function header_() {
-  console.info('');
-  console.info('%s (%s)', info.getAppTitle(), info.getAppVersion());
-  console.info('  %s', info.getAppVendor());
-  console.info('');
 }
 
 function usage_() {

@@ -8,42 +8,49 @@
 
 var fs = require('fs');
 
-var app = require('./lib/application');
-var settings = require('./lib/settings');
-var startup = require('./lib/startup');
-var shutdown = require('./lib/shutdown');
+var _ = require('lodash');
 
-console.info('');
-console.info('%s (%s)', settings.getAppTitle(), settings.getAppVersion());
-console.info('  %s', settings.getAppVendor());
-console.info('');
+var app = require('./lib/application');
+var info = require('./lib/info');
+var logger   = require('./lib/logger').getLogger('bicycle.app');
+var settings = require('./lib/settings');
+var runner   = require('./lib/runner');
 
 if (settings.isHelp()) {
   var content = fs.readFileSync('./man.txt');
+  // Application Header
+  info.showHeader();
   console.info(content.toString());
   process.exit(0);
 }
 
+// Application Header
+info.showHeader(logger);
+
 /**
- * @type {StartupOptions}
+ * @type {StartOptions}
  */
 var startupOptions = {
   homePath: settings.getHomePath(),
-  name: settings.getAppName(),
-  stopWaiting: settings.getSetting('stop.waiting', 500),
-  shutdown: function (name) {
-    shutdown.shutdown(name);
-    console.info('<%= appTitle %> server is shutdown with "%s"', name);
-  }
+  name: info.getAppName(),
+  stopWaiting: settings.getSetting('stop.waiting', 500)
 };
 
-startup(startupOptions)
+// The runner tries to start the application and turns the phase into "running"
+runner.start(startupOptions)
   .then(function () {
     var port = settings.getPort();
     var host = settings.getHost();
 
     app.listen(port, host, function () {
-      console.info('<%= appTitle %> Server is listen http://%s:%s', host, port);
+      logger.info('Bicycle Service Book Server is listen http://', host, ':', port);
     });
+
+  }, function (reason) {
+    if (!_.isString(reason)) {
+      reason = JSON.stringify(reason, null, 3);
+    }
+    logger.warn('Starts the application has occurred an Error:');
+    logger.warn(reason);
   });
 

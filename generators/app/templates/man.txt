@@ -1,0 +1,6 @@
+#
+# <%= appTitle %> - <%= githubUrl %>
+#
+# Copyright (c) <%= year %> <%= userName %>
+#
+# Add here your help message.

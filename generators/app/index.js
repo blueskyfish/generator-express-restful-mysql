@@ -115,6 +115,12 @@ module.exports = generators.Base.extend({
       this._to(),
       model
     );
+
+    this.fs.copyTpl(
+      this._from('man.txt'),
+      this._to('man.txt'),
+      model
+    );
   },
 
   _from: function (filename) {

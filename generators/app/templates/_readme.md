@@ -3,9 +3,9 @@
 
 # <%= appTitle %>
 
-> TODO summary description
+> TODO add here summary description
 
-_Generates with [Yeoman][yeoman]._
+_Generates with [Yeoman][yeoman] and the generator <https://github.com/blueskyfish/generator-express-restful-mysql.git>._
 
 ## TODOs
 
