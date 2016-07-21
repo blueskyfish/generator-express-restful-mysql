@@ -7,7 +7,6 @@
     "type": "git",
     "url": "https://github.com/blueskyfish/generator-express-restful-mysql.git"
   },
-  "readme": "Generates a express restful application with the mysql connection",
   "license": "MIT",
   "files": [
     "generators/app"
