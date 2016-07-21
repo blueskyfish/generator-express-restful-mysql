@@ -106,6 +106,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.2.2    | 2016-07-21 | fixed readme property
 0.2.1    | 2016-04-21 | fixed the db pool settings.
 0.2.0    | 2016-04-19 | reedit the start phase and add an eventBus.
 0.1.1    | 2016-04-13 | fixed some bugs and add the man.txt file for helping.
