@@ -98,6 +98,7 @@ Your project path: /playground/simple-microservice
    create man.txt
    create hero.txt
    create settings.example.json
+   create jsdoc-config.json
 ```
 
 ## Running
@@ -108,6 +109,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.3.1    | 2016-08-21 | fixed: copy missing the jsdoc-config.json
 0.3.0    | 2016-08-20 | change the startup and the settings behaviours. add a mysql example
 0.2.2    | 2016-07-21 | fixed readme property
 0.2.1    | 2016-04-21 | fixed the db pool settings.

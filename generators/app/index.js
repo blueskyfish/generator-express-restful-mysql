@@ -133,6 +133,12 @@ module.exports = generators.Base.extend({
       this._to('settings.example.json'),
       model
     );
+    // copy jsdoc-config.json
+    this.fs.copyTpl(
+      this._from('jsdoc-config.json'),
+      this._to('jsdoc-config.json'),
+      model
+    );
   },
 
   _from: function (filename) {
