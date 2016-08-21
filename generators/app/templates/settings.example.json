@@ -1,0 +1,27 @@
+{
+  "server": {
+    "port": 18080,
+    "host": "localhost"
+  },
+  "db": {
+    "port": 3306,
+    "host": "localhost",
+    "user": "database user",
+    "password": "database password",
+    "database": "datebase name",
+    "connectionLimit": 10
+  },
+  "logger": {
+    "config": {
+      "root": "info",
+      "<%= shortcut %>": "debug",
+      "<%= shortcut %>.db": "debug",
+      "<%= shortcut %>.middleware": "debug",
+      "<%= shortcut %>.metric": "info",
+      "<%= shortcut %>.sensor": "debug",
+      "<%= shortcut %>.shutdown": "info"
+    },
+    "separator": ".",
+    "appender": "console"
+  }
+}

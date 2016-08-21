@@ -9,22 +9,25 @@
     "url": "<%= githubUrl %>"
   },
   "readme": "TODO add a readme description",
-  "main": "index.js",
+  "license": "TODO",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js",
+    "jsdoc": "jsdoc -r -c ./jsdoc-config.json -d ./help"
   },
   "bin": {
-    "<%= shortcut %>": "index.js"
+    "<%= shortcut %>": "server.js"
   },
   "dependencies": {
-    "bluesky-logger": "0.6.3",
-    "body-parser": "1.15.0",
-    "express": "4.13.4",
-    "lodash": "4.11.1",
+    "app-module-path": "1.1.0",
+    "bluesky-logger": "0.7.0",
+    "body-parser": "1.15.2",
+    "express": "4.14.0",
+    "lodash": "4.15.0",
     "minimist": "1.2.0",
-    "mocha": "2.4.5",
-    "moment": "2.11.2",
-    "mysql": "2.10.2",
+    "mocha": "3.0.2",
+    "moment": "2.14.1",
+    "mysql": "2.11.1",
     "q": "1.4.1"
   }
 }

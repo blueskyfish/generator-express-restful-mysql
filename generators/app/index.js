@@ -28,7 +28,7 @@ module.exports = generators.Base.extend({
       {
         type: 'input',
         name: 'appName',
-        message: 'Application name',
+        message: 'Application Name',
         default: path.basename(process.cwd())
       },
       {
@@ -104,21 +104,33 @@ module.exports = generators.Base.extend({
       this._to('package.json'),
       model
     );
-
+    // copy logo
     this.fs.copy(
       this._from('logo.png'),
       this._to('logo.png')
     );
-
+    // copy all javascript files
     this.fs.copyTpl(
       this._from('**/*.js'),
       this._to(),
       model
     );
-
+    // copy man page
     this.fs.copyTpl(
       this._from('man.txt'),
       this._to('man.txt'),
+      model
+    );
+    // copy hero ascii art
+    this.fs.copyTpl(
+      this._from('hero.txt'),
+      this._to('hero.txt'),
+      model
+    );
+    // copy example of settings.json
+    this.fs.copyTpl(
+      this._from('settings.example.json'),
+      this._to('settings.example.json'),
       model
     );
   },

@@ -4,9 +4,13 @@
 # Copyright (c) <%= year %> <%= userName %>
 #
 
+# Jetbrains Editors
 .idea/
 *.iml
 
+# Node & NPM
 node_modules/
 npm-debug.log
 
+# JSDoc
+help/

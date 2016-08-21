@@ -65,37 +65,39 @@ $ npm install
 **Example:**
 
 ```sh
-$ yo express-restful-mysql Dummy
-? Application name test-app
-? Your Github name Dummy
+$ yo express-restful-mysql dummy
+? Application Name simple-microservice
+? Your Github name dummy
 ? Your Email Address dummy@example.com
-? Abbreviation for your application test
+? Abbreviation for your application simple
 Summary:
-   UserName:    Dummy -> dummy
+   UserName:    dummy -> dummy
    UserEmail:   dummy@example.com
-   Application: test-app -> testApp
-   Shortcut:    test -> TEST
-   Github:      https://github.com/dummy/test-app.git
-Your project path: /path/to/project/test-app
+   Application: simple-microservice -> simpleMicroservice
+   Shortcut:    simple -> Simple
+   Github:      https://github.com/dummy/simple-microservice.git
+Your project path: /playground/simple-microservice
    create package.json
    create .editorconfig
    create .gitignore
    create readme.md
    create logo.png
-   create decrypt.js
-   create encrypt.js
-   create index.js
-   create lib/application.js
-   create lib/crypt.js
-   create lib/db.js
-   create lib/duration.js
-   create lib/eventbus.js
-   create lib/fs-then.js
-   create lib/info.js
-   create lib/logger.js
-   create lib/phase.js
-   create lib/runner.js
-   create lib/settings.js
+   create app/application.js
+   create app/args.js
+   create app/config-util.js
+   create app/configure.js
+   create app/db.js
+   create app/http-util.js
+   create app/info.js
+   create app/logger.js
+   create app/middleware.js
+   create app/router/mysql.js
+   create app/service/show-databases.js
+   create app/shutdown.js
+   create server.js
+   create man.txt
+   create hero.txt
+   create settings.example.json
 ```
 
 ## Running
@@ -106,6 +108,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.3.0    | 2016-08-20 | change the startup and the settings behaviours. add a mysql example
 0.2.2    | 2016-07-21 | fixed readme property
 0.2.1    | 2016-04-21 | fixed the db pool settings.
 0.2.0    | 2016-04-19 | reedit the start phase and add an eventBus.

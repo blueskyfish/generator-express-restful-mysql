@@ -7,100 +7,113 @@
 
 _Generates with [Yeoman][yeoman] and the generator <https://github.com/blueskyfish/generator-express-restful-mysql.git>._
 
+## Table of Content
+
+* [TODOs](#user-content-todos)
+* [Execute the Application](#user-content-execute-the-application)
+* [Endpoints](#user-content-endpoints)
+* [Deployment](#user-content-deployment)
+	* [Parameters](#user-content-parameters)
+	* [Setting File](#user-content-setting-file)
+* [Home Directory](#user-content-home-directory)
+* [Logging](#user-content-logging)
+* [Generate Documentation](#user-content-generate-documentation)
+* [License](#user-content-license)
+
 ## TODOs
 
 Some settings or replacement cannot be done with the generator. After doing this, you can delete this section.
 
 * Choose a license (e.g: The MIT Licence).
 * Set the version in the `package.json`.
-* Replace the Logo (`logo.png`)
+* Replace the Logo (`logo.png`).
+* Replace with own hero ascii art _(example: <http://patorjk.com/software/taag/>)_.
 * Add a description into the `package.json` and to the summary of this readme file.
+* Execute `$ npm install` to resolve and load the dependencies.
 * Create a git repository with `$ git init` and add your git user information `$ git config user.name "<%= userName %>" && git config user.email "<%= userEmail %>"`
 * Create a remote repository on [Github][github] with the name `<%= appName %>`. It should look after: `<%= githubUrl %>`
 
-## Execute the application
-
-First: exports the environment variables `<%= appShort %>_HOME` and `<%= appShort %>_SALT`.
+## Execute the Application
 
 ```sh
-$ npm index.js --port 3000 [--host localhost]
+$ node server.js [--verbose | -v] [--help] --config=/path/to/configuration.json
 ```
+
+## Endpoints
+
+There are 2 endpoints after starting the application.
+
+* `/about`
+* `/mysql/show/databases`
 
 
 ## Deployment
 
 Deploying of the application needs some settings on the computer machine.
 
-* Environment Variables
 * Parameters
 * Setting File
-
-### Environment Variables
-
-Name                | Type    | Required | Description
---------------------|---------|----------|--------------------------------------
-`<%= appShort %>_HOME`         | string  | yes      | The Home directory of the **<%= appTitle %>**.
-`<%= appShort %>_SALT`         | string  | yes      | The salt for encrypt or decrypt the (database) password.
 
 ### Parameters
 
 Name                | Type    | Required | Description
 --------------------|---------|----------|-------------------------------------------
-`--port number`     | number  | yes      | The port for the server listening.
-`--host domain`     | string  | no       | The host of the server. Default `localhost`.
+`--verbose` | `-v`  | boolean | no       | Show more logging messages
 `--help`            | boolean | no       | Shows the help
+`--config=/path/to` | string  | yes      | The filename with the path to the configuration json file.
+
 
 ### Setting File
 
-Database and other configurations are in a file `settings.json` in the folder of the `<%= appShort %>_HOME` environment.
-
-> Note: The password for the database user is encrypted.
+> An Example of the settings is finding at `settings.example.json`
 
 Name                | Type    | Default     | Description
 --------------------|---------|-------------|------------------------------------------
+`server.host`       | string  | `localhost` | The server host for listening.
+`server.port`       | number  | `40080`     | The server port for listening
 `db.host`           | string  | `localhost` | The database host.
 `db.port`           | number  | `3306`      | The database port.
 `db.user`           | string  |             | The database user.
-`db.password`       | string  |             | The encryted password for the database user.
+`db.password`       | string  |             | The password for the database user.
 `db.database`       | string  |             | The database name.
-`stop.waiting`      | number  | `500`       | The waiting (in milliseconds) of sending the SIGKILL signal.
 `logger.config`     | object  |             | The namespace configuration of the logger.
 `logger.separator`  | string  | `.`         | The separator for the namespace.
 `logger.appender`   | string  | `console`   | The appender setting (`console` or `file`).
 
 
-**Eample:**
+**Example:**
 
 ```json
 {
-  "db": {
-    "port": 3306,
-    "host": "localhost",
-    "user": "database user",
-    "password": "encrypted database password",
-    "database": "datebase name",
-    "connectionLimit": 10
-  },
-  "stop": {
-    "waiting": 600
-  },
-  "logger": {
-    "config": {
-      "root": "info",
-      "<%= shortcut %>": "debug",
-      "<%= shortcut %>.db": "debug",
-      "<%= shortcut %>.shutdown": "info"
+    "server": {
+        "host": "127.0.0.1",
+        "port": 65001
     },
-    "separator": ".",
-    "appender": "console"
-  }
+    "db": {
+        "port": 3306,
+        "host": "localhost",
+        "user": "database user",
+        "password": "database password",
+        "database": "datebase name",
+        "connectionLimit": 10
+    },
+    "logger": {
+        "config": {
+            "root": "info",
+            "temo": "debug",
+            "temo.db": "debug",
+            "temo.shutdown": "info"
+        },
+        "separator": ".",
+        "appender": "console"
+    }
 }
 ```
 
 
 ## Home Directory
 
-The application needs the environment variable `<%= appShort %>_HOME`. It shows the home directory of this application.
+The home directory is calculated from the configuration filename.
 
 **Sub Directories**
 
@@ -116,26 +129,18 @@ There are 2 types as the log messages are written.
 
 The setting `logger.appender` controls the writing of the log messages.
 
-## Encryption
+## Generate Documentation
 
-Some settings are encrypted. The environment variable `<%= appShort %>_SALT` contains the salt for the encryption or decryption.
+These functions are provided with JSDoc comments. You can it generate an interface documentation.
 
-### Encrypt a password
-
-The script `encrypt.js` in the root directory of the project encrypt a value with the password. It does not use the environment variable `<%= appShort %>_SALT`.
+**Steps**
 
 ```sh
-$ node encypt.js password salt
+$ npm install -g jsdoc
+$ npm run jsdoc
 ```
 
-### Decrypt a password
-
-The script `decrypt.js` in the root directory of the project decrypt a value with the password. It does not use the environment variable `<%= appShort %>_SALT`.
-
-```sh
-$ node decrypt.js password salt
-```
-
+The documentation is finding in the directory `help`.
 
 ## License
 
