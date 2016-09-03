@@ -109,6 +109,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.3.2    | 2016-09-03 | update the dependencies modules in the generator. Fixed some spellings.
 0.3.1    | 2016-08-21 | fixed: copy missing the jsdoc-config.json
 0.3.0    | 2016-08-20 | change the startup and the settings behaviours. add a mysql example
 0.2.2    | 2016-07-21 | fixed readme property

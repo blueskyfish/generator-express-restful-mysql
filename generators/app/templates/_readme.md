@@ -117,7 +117,7 @@ The home directory is calculated from the configuration filename.
 
 **Sub Directories**
 
-* `logs` In this directory the log files are stored.
+* `logs` The log files are stored in this directory.
 
 
 ## Logging
