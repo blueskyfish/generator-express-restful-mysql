@@ -16,7 +16,7 @@
  * @requires module:<%= shortcut %>/config-util
  * @requires module:<%= shortcut %>/logger
  * @requires module:<%= shortcut %>/middleware
- * @requires module_<%= shortcut %>/router/mysql
+ * @requires module:<%= shortcut %>/router/mysql
  */
 
 'use strict';
@@ -51,21 +51,46 @@ module.exports.start = function (settings) {
   // set the application title
   app.set('title', info.getAppTitle());
 
-  // --< Middlewares >---------------------------
+  // Middlewares...
 
   app.use(middleware.measureTime());
 
   app.use(bodyParser.json());
 
-  // --< Routers >-------------------------------
+  // Routers...
 
   app.use('/mysql', routerMySQL);
-  // TODO Add here the routers
+
+  // TODO Add here your routers
 
 
-  // --< Endpoints >-----------------------------
+  // Endpoints...
 
-  // GET: "/about"
+  /**
+   * @api {get} /about About
+   * @apiName GetAbout
+   * @apiGroup System
+   * @apiDescription Shows the information about the application
+   * @apiVersion 0.0.1
+   * @apiExample {curl} Example usage:
+   *     curl -i http://localhost:18080/about
+   *
+   * @apiSuccess {String} name the application name
+   * @apiSuccess {String} title the title of the application
+   * @apiSuccess {String} version the version of the application
+   * @apiSuccess {String} vendor the author / company of the application
+   * @apiSuccess {String} description a short description.
+   *
+   * @apiSuccessExample {json} Success response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "name": "dummy-rest",
+   *       "title": "Dummy Rest Interface",
+   *       "version": "0.0.1",
+   *       "vendor": "Dummy <dummy@example.com>",
+   *       "description": "This is a dummy service"
+   *     }
+   */
   app.get('/about', function about(req, res) {
     res.send({
       name: info.getAppName(),
@@ -76,7 +101,7 @@ module.exports.start = function (settings) {
     });
   });
 
-  // --< Starting >------------------------------
+  // Starting...
 
   // get the port and host
   const port = configUtil.getSetting(settings, 'server.port', DEFAULT_PORT);
@@ -86,7 +111,7 @@ module.exports.start = function (settings) {
 
   // starts the listening of the express application...
   app.listen(port, host, function () {
-    logger.info('[<%= shortcut %>] Server is listen http://', host, ':', port);
+    logger.info('Server is listen http://', host, ':', port);
     done.resolve(true);
   });
 

@@ -19,11 +19,13 @@ module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
-     this.argument('userName', { type: String, required: false, optional: true, desc: 'Your Github user name'});
+    this.argument('userName', { type: String, required: false, optional: true, desc: 'Your Github user name'});
+    this.argument('company', { type : String, required: false, optional: true, desc: 'Your Company'});
   },
 
   prompting: function () {
     var done = this.async();
+    var defaultEmail = this.userName && this.company ? this.userName + '@' + this.company + '.com' : '';
     this.prompt([
       {
         type: 'input',
@@ -40,7 +42,8 @@ module.exports = generators.Base.extend({
       {
         type: 'input',
         name: 'userEmail',
-        message: 'Your Email Address'
+        message: 'Your Email Address',
+        default: defaultEmail
       },
       {
         type: 'input',
@@ -48,7 +51,7 @@ module.exports = generators.Base.extend({
         message: 'Abbreviation for your application',
         default: this._abbreviation(path.basename(process.cwd()))
       }
-    ], function (answers) {
+    ]).then(function (answers) {
       this.userLowerName = answers.userName.toLowerCase();
       this.userName = answers.userName;
       this.userEmail = answers.userEmail;
@@ -137,6 +140,12 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this._from('jsdoc-config.json'),
       this._to('jsdoc-config.json'),
+      model
+    );
+    // copy apidoc.json
+    this.fs.copyTpl(
+      this._from('apidoc.json'),
+      this._to('apidoc.json'),
       model
     );
   },

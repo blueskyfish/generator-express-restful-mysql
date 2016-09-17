@@ -18,7 +18,8 @@
       "<%= shortcut %>.db": "debug",
       "<%= shortcut %>.middleware": "debug",
       "<%= shortcut %>.metric": "info",
-      "<%= shortcut %>.sensor": "debug",
+      "<%= shortcut %>.executor": "info",
+      "<%= shortcut %>.service": "debug",
       "<%= shortcut %>.shutdown": "info"
     },
     "separator": ".",

@@ -27,7 +27,7 @@ Some settings or replacement cannot be done with the generator. After doing this
 * Choose a license (e.g: The MIT Licence).
 * Set the version in the `package.json`.
 * Replace the Logo (`logo.png`).
-* Replace with own hero ascii art _(example: <http://patorjk.com/software/taag/>)_.
+* Replace with own hero ascii art _(example: <http://patorjk.com/software/taag/>)_ (`hero.txt`).
 * Add a description into the `package.json` and to the summary of this readme file.
 * Execute `$ npm install` to resolve and load the dependencies.
 * Create a git repository with `$ git init` and add your git user information `$ git config user.name "<%= userName %>" && git config user.email "<%= userEmail %>"`
@@ -45,6 +45,8 @@ There are 2 endpoints after starting the application.
 
 * `/about`
 * `/mysql/show/databases`
+
+> **Note**: If the tool `apidoc` is installed, you can view the documentation on Endpoints in directory `apidoc`.
 
 
 ## Deployment
@@ -115,6 +117,8 @@ Name                | Type    | Default     | Description
 
 The home directory is calculated from the configuration filename.
 
+*Note: The pid file is written in the home directory!*
+
 **Sub Directories**
 
 * `logs` The log files are stored in this directory.
@@ -131,16 +135,18 @@ The setting `logger.appender` controls the writing of the log messages.
 
 ## Generate Documentation
 
-These functions are provided with JSDoc comments. You can it generate an interface documentation.
+There are to commands for generating the jsDoc and the apidoc for the endpoints:
+
+* jsDoc: `npm run jsdoc` generates the jsdoc in the directory `jsdoc`
+* apidoc: `npm run apidoc` generates the apidoc of the endpoints in the directory `apidoc`.
 
 **Steps**
 
 ```sh
-$ npm install -g jsdoc
 $ npm run jsdoc
+$ npm run apidoc
 ```
 
-The documentation is finding in the directory `help`.
 
 ## License
 

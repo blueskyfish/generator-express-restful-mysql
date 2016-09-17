@@ -10,9 +10,13 @@
  * **Example**
  * ```js
  * router.post('/user', function (req, res) {
- *   executor.run(req, res, function () {
+ *   executor.execute(req, res, function (sender) {
+ *
  *     const userModel = req.body;
- *     executor.send(service.save(userModel), res, 'result');
+ *     const promise   = service.save(userModel);
+ *     const property  = 'result;
+ *
+ *     sender(promise, property);
  *   });
  * });
  * ```
@@ -21,72 +25,65 @@
  *
  * @requires util
  * @requires lodash
- * @requires <%= shortcut %>/logger
  * @requires <%= shortcut %>/http-util
  */
 
 'use strict';
 
-const util     = require('util');
+const util       = require('util');
 
-const _        = require('lodash');
+const _          = require('lodash');
 
-const logger   = require('app/logger').getLogger('<%= shortcut %>.executor');
-const httpUtil = require('app/http-util');
+const httpStatus = require('app/http-status');
 
 /**
- * Executes the service call and catches the errors.
+ * Executes the service call, send the result to the client and catches the errors.
  *
- * @param {Request}  req the express request
- * @param {Response} res the express response
+ * @param {request}  req the express request
+ * @param {response} res the express response
  * @param {function} cb the callback, that collect the answer
  */
-module.exports.run = function (req, res, cb) {
+module.exports.execute = function (req, res, cb) {
   const url = req.originalUrl;
+
+  function __sender(promise, propertyName) {
+    if (!promise.then) {
+      res.status(httpStatus.SERVER_ERROR)
+        .send({
+          status: 'error',
+          message: 'Could not found a result'
+        });
+      return;
+    }
+    promise.then(
+      function (result) {
+        var data = {
+          status: 'okay'
+        };
+        data[propertyName] = result;
+        res.send(data);
+      },
+      function (reason) {
+        var data = {
+          status: 'error',
+          error: reason
+        };
+        res.status(httpStatus.BAD_REQUEST)
+          .send(data);
+      }
+    );
+  }
   try {
-    cb();
+
+    cb(__sender);
+
   } catch (e) {
     e = e.message;
-    const message = util.format('[<%= shortcut %>.exe]: %s (%s)', e, url);
-    res.status(httpUtil.HTTP_STATUS_BAD_REQUEST)
+    const message = util.format('[<%= shortcut %>]: %s (%s)', e, url);
+    res.status(httpStatus.BAD_REQUEST)
       .send({
         status: 'error',
         message: message
       });
   }
-};
-
-/**
- * Sends the resolve or rejected value.
- *
- * @param {promise} promise the promise with the callback of resolve or reject.
- * @param {response} res the express response object
- * @param {string} propertyName the property name
- */
-module.exports.send = function (promise, res, propertyName) {
-  if (!promise.then) {
-    res.status(httpUtil.HTTP_STATUS_SERVER_ERROR)
-      .send({
-        status: 'error',
-        message: 'Could not found a result'
-      });
-    return;
-  }
-  promise.then(
-    function (result) {
-      var data = {
-        status: 'okay'
-      };
-      data[propertyName] = result;
-      res.send(data);
-    },
-    function (reason) {
-      var data = {
-        status: 'error',
-        error: reason
-      };
-      res.status(httpUtil.HTTP_STATUS_BAD_REQUEST)
-        .send(data);
-    }
-  );
 };

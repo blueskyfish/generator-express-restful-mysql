@@ -31,9 +31,8 @@ $ npm install -g generator-express-restful-mysql
 
 ```sh
 $ yo express-restful-mysql --help
-
 Usage:
-  yo express-restful-mysql:app [options] [<userName>]
+  yo express-restful-mysql:app [options] [<userName>] [<company>]
 
 Options:
   -h,   --help          # Print the generator's options and usage
@@ -42,6 +41,7 @@ Options:
 
 Arguments:
   userName  # Your Github user name  Type: String  Required: false
+  company   # Your Company           Type: String  Required: false
 ```
 
 ## Usage
@@ -87,7 +87,7 @@ Your project path: /playground/simple-microservice
    create app/config-util.js
    create app/configure.js
    create app/db.js
-   create app/http-util.js
+   create app/http-status.js
    create app/info.js
    create app/logger.js
    create app/middleware.js
@@ -99,6 +99,7 @@ Your project path: /playground/simple-microservice
    create hero.txt
    create settings.example.json
    create jsdoc-config.json
+   create apidoc.json
 ```
 
 ## Running
@@ -109,6 +110,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.4.0    | 2016-09-16 | reedit the generator:<br> - generatore jsdoc and apidoc<br> - reedit the executer module: `executor.execute(req, res, function (sender) { sender(promise, propertyName); });`<br> - improve the logger messages.
 0.3.3    | 2016-09-16 | update the dependency modules. Improve the readme.md
 0.3.2    | 2016-09-03 | update the dependencies modules in the generator. Fixed some spellings.
 0.3.1    | 2016-08-21 | fixed: copy missing the jsdoc-config.json

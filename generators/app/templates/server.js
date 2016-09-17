@@ -43,12 +43,12 @@ if (args.isHelp()) {
 /**
  * @type {ConfigureOptions}
  */
-var configureOptions = {
+const configureOptions = {
   configFilename: args.getConfigFilename(),
   name:       info.getAppName(),
   shutdown: function (name) {
     shutdown.shutdown(name);
-    console.info('[<%= shortcut %>] Server is shutdown with "%s"', name);
+    console.info('Server is shutdown with "%s"', name);
   }
 };
 
@@ -75,7 +75,7 @@ configure(configureOptions)
           .start(settings)
           .then(function () {
             // now the express application is listen
-            logger.info('[<%= shortcut %>] running ...');
+            logger.info('application is running ...');
           });
       } catch (e) {
         if (logger) {

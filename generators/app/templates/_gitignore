@@ -13,4 +13,8 @@ node_modules/
 npm-debug.log
 
 # JSDoc
-help/
+jsdoc/
+apidoc/
+
+# Settings
+settings.*.json

@@ -8,13 +8,19 @@
   },
   "source": {
     "include": [
-      "."
+      ".",
+      "readme.md"
     ],
     "exclude": [
-      "node_modules"
+      "node_modules",
+      "apidoc",
+      "jsdoc"
     ],
     "includePattern": ".+\\.js$",
     "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "opts": {
+    "template": "./node_modules/docdash"
   },
   "plugins": [
     "plugins/markdown",

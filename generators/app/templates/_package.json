@@ -12,8 +12,9 @@
   "license": "TODO",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "jsdoc": "jsdoc -r -c ./jsdoc-config.json -d ./help"
+    "start": "node server.js --config settings.dev.json",
+    "jsdoc":  "./node_modules/.bin/jsdoc -r -c ./jsdoc-config.json -d ./jsdoc",
+    "apidoc": "./node_modules/.bin/apidoc -f \".*\\.js$\" -i ./app -o ./apidoc"
   },
   "bin": {
     "<%= shortcut %>": "server.js"
@@ -26,8 +27,13 @@
     "lodash": "4.15.0",
     "minimist": "1.2.0",
     "mocha": "3.0.2",
-    "moment": "2.14.1",
+    "moment": "2.15.0",
     "mysql": "2.11.1",
     "q": "1.4.1"
+  },
+  "devDependencies": {
+    "apidoc": "0.16.1",
+    "docdash": "0.4.0",
+    "jsdoc": "3.4.1"
   }
 }

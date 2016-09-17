@@ -73,7 +73,7 @@ var mPool = null;
  */
 module.exports.start = function (settings) {
   if (!mPool) {
-    // creat connection pool.
+    logger.info('create connection pool.');
     mPool = mysql.createPool({
       host:     configUtil.getSetting(settings, 'db.host', 'localhost'),
       port:     configUtil.getSetting(settings, 'db.port', 3306),
@@ -100,7 +100,7 @@ module.exports.start = function (settings) {
         mPool.end(function () {});
       }
       mPool = null;
-      logger.info('[database] pool is shutdown. Reason of "', name, '"...');
+      logger.info('pool is shutdown. Reason of "', name, '"...');
     });
   }
 };

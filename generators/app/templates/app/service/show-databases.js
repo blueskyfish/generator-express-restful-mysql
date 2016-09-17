@@ -7,12 +7,15 @@
 /**
  * @module <%= shortcut %>/service/show-databases
  *
+ * @requires lodash
  * @requires module:<%= shortcut %>/args
  * @requires module:<%= shortcut %>/db
  * @requires module:<%= shortcut %>/logger
  */
 
 'use strict';
+
+const _      = require('lodash');
 
 const args   = require('app/args');
 const db     = require('app/db');
@@ -61,7 +64,12 @@ module.exports.execute = function (options) {
           if (args.isVerbose()) {
             logger.debug('Your databases: ', JSON.stringify(databases));
           }
-          return databases;
+          var result = [];
+          _.forEach(databases, function (db) {
+            const name = _.values(db)[0];
+            result.push(name);
+          });
+          return result;
         })
         .finally(function () {
           // release the db connection
