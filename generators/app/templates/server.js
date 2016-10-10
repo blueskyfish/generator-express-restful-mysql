@@ -79,6 +79,9 @@ configure(configureOptions)
           .then(function () {
             // now the express application is listen
             logger.info('application is running ...');
+          }, function (reason) {
+            logger.warn(reason);
+            process.exit(1);
           });
       } catch (e) {
         if (logger) {

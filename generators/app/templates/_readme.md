@@ -46,7 +46,7 @@ There are 2 endpoints after starting the application.
 * `/about`
 * `/mysql/show/databases`
 
-> **Note**: If the tool `apidoc` is installed, you can view the documentation on Endpoints in directory `apidoc`.
+> **Note**: If the tool `apidoc` is installed, you can view the documentation on Endpoints in directory `apidoc`: call `npm run apidoc`.
 
 
 ## Deployment
@@ -73,7 +73,7 @@ Name                      | Type    | Required | Description
 Name                | Type    | Default     | Description
 --------------------|---------|-------------|------------------------------------------
 `server.host`       | string  | `localhost` | The server host for listening.
-`server.port`       | number  | `40080`     | The server port for listening
+`server.port`       | number  |             | The server port for listening. The server port is required now!
 `db.host`           | string  | `localhost` | The database host.
 `db.port`           | number  | `3306`      | The database port.
 `db.user`           | string  |             | The database user.

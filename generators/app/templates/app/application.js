@@ -35,7 +35,6 @@ const routerMySQL     = require('app/router/mysql');
 
 const app = express();
 
-const DEFAULT_PORT    = 40080;
 const DEFAULT_HOST    = 'localhost';
 
 /**
@@ -88,7 +87,8 @@ module.exports.start = function (settings) {
    *       "title": "Dummy Rest Interface",
    *       "version": "0.0.1",
    *       "vendor": "Dummy <dummy@example.com>",
-   *       "description": "This is a dummy service"
+   *       "description": "This is a dummy service",
+   *       "build": "20161004-133401"
    *     }
    */
   app.get('/about', function about(req, res) {
@@ -97,23 +97,31 @@ module.exports.start = function (settings) {
       title: info.getAppTitle(),
       version: info.getAppVersion(),
       vendor: info.getAppVendor(),
-      description: info.getAppDescription()
+      description: info.getAppDescription(),
+      build: info.getBuildTimestamp()
     });
   });
 
   // Starting...
 
   // get the port and host
-  const port = configUtil.getSetting(settings, 'server.port', DEFAULT_PORT);
+  const port = configUtil.getSetting(settings, 'server.port', 0);
   const host = configUtil.getSetting(settings, 'server.host', DEFAULT_HOST);
 
   const done = Q.defer();
 
-  // starts the listening of the express application...
-  app.listen(port, host, function () {
-    logger.info('Server is listen http://', host, ':', port);
-    done.resolve(true);
-  });
+  if (port > 0) {
+    // starts the listening of the express application...
+    app.listen(port, host, function () {
+      logger.info('Server is listen http://', host, ':', port);
+      done.resolve(true);
+    });
+  } else {
+    // missing the port for the server...
+    process.nextTick(function () {
+      done.reject('Missing the setting property "server.port"!');
+    });
+  }
 
   return done.promise;
 };
