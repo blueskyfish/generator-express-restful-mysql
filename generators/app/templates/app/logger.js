@@ -43,11 +43,11 @@ var consoleOutput = true;
 module.exports.start = function (settings) {
   // Logger Configuration
   loggerFactory
-    .config(configUtil.getSetting(settings, 'logger.config', DEFAULT_LOGGER_CONFIG))
+    .config(configUtil.getSetting(settings, 'logger.namespaces', DEFAULT_LOGGER_CONFIG))
     .setSeparator(configUtil.getSetting(settings, 'logger.separator', '.'));
   if (configUtil.getSetting(settings, 'logger.appender', 'console') === 'file') {
 
-    const logPath = path.join(configUtil.getSetting(settings, 'homePath', '.'), 'logs');
+    const logPath = configUtil.getSetting(settings, 'logger.path', '.');
     if (!fs.existsSync(logPath)) {
       // create the log folder / directory.
       fs.mkdirSync(logPath);

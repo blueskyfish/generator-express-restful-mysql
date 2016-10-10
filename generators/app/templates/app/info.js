@@ -8,12 +8,32 @@
  * Contains the information about the application. It is read from the package.json
  *
  * @module <%= shortcut %>/info
+ *
+ * @requires fs
+ * @requires path
  */
 
 'use strict';
 
-const pkg = require('../package.json');
+const fs   = require('fs');
+const path = require('path');
 
+const pkg = require(path.join(__dirname, '..', 'package.json'));
+
+var version = {};
+
+//
+// try to read the version.json file
+//
+fs.readFile(path.join(__dirname, '..', 'version.json'), 'utf-8', function (err, content) {
+  if (!err) {
+    try {
+      version = JSON.parse(content);
+    } catch (e) {
+      //
+    }
+  }
+});
 
 module.exports.getAppName = function () {
   return pkg.name;
@@ -33,6 +53,11 @@ module.exports.getAppVendor = function () {
 
 module.exports.getAppDescription = function () {
   return pkg.description;
+};
+
+
+module.exports.getBuildTimestamp = function () {
+  return version.timestamp || 'unknown';
 };
 
 /**

@@ -58,11 +58,12 @@ Deploying of the application needs some settings on the computer machine.
 
 ### Parameters
 
-Name                | Type    | Required | Description
---------------------|---------|----------|-------------------------------------------
-`--verbose` | `-v`  | boolean | no       | Show more logging messages
-`--help`            | boolean | no       | Shows the help
-`--config=/path/to` | string  | yes      | The filename with the path to the configuration json file.
+Name                      | Type    | Required | Description
+--------------------------|---------|----------|-------------------------------------------
+`--verbose` | `-v`        | boolean | no       | Show more logging messages
+`--help`                  | boolean | no       | Shows the help
+`--log=/path/of/loggging` | string  | yes      | Contains the directory how the log messages are written.
+`--config=/path/to`       | string  | yes      | The filename with the path to the configuration json file.
 
 
 ### Setting File
@@ -78,7 +79,7 @@ Name                | Type    | Default     | Description
 `db.user`           | string  |             | The database user.
 `db.password`       | string  |             | The password for the database user.
 `db.database`       | string  |             | The database name.
-`logger.config`     | object  |             | The namespace configuration of the logger.
+`logger.namespaces` | object  |             | The namespace configuration of the logger.
 `logger.separator`  | string  | `.`         | The separator for the namespace.
 `logger.appender`   | string  | `console`   | The appender setting (`console` or `file`).
 
@@ -100,7 +101,7 @@ Name                | Type    | Default     | Description
         "connectionLimit": 10
     },
     "logger": {
-        "config": {
+        "namespaces": {
             "root": "info",
             "temo": "debug",
             "temo.db": "debug",
@@ -131,7 +132,7 @@ There are 2 types as the log messages are written.
 * `console`: The log messages are written to the console.
 * `file`: The log messages are written into a file.
 
-The setting `logger.appender` controls the writing of the log messages.
+The setting `logger.appender` controls the writing of the log messages. The parameter `--log` specifies path name where the log messages are written.
 
 ## Generate Documentation
 

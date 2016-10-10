@@ -12,7 +12,7 @@
     "connectionLimit": 10
   },
   "logger": {
-    "config": {
+    "namespaces": {
       "root": "info",
       "<%= shortcut %>": "debug",
       "<%= shortcut %>.db": "debug",

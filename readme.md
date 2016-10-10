@@ -110,6 +110,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.5.0    | 201610-10  | add some improvements:<br> - fixed relative path names to absolute path names (hero)<br> - rename config property `logger.config` to `logger.namespaces`<br> - try to load the version.json for the about endpoint.
 0.4.0    | 2016-09-16 | reedit the generator:<br> - generatore jsdoc and apidoc<br> - reedit the executer module: `executor.execute(req, res, function (sender) { sender(promise, propertyName); });`<br> - improve the logger messages.
 0.3.3    | 2016-09-16 | update the dependency modules. Improve the readme.md
 0.3.2    | 2016-09-03 | update the dependencies modules in the generator. Fixed some spellings.

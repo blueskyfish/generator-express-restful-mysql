@@ -25,7 +25,8 @@ module.exports.measureTime = function () {
   return function measureTimeMiddleware(req, res, next) {
     const startTime = Date.now();
     const url = req.originalUrl;
+    const method = req.method;
     next();
-    logger.debug('request "', url, '" in ', Date.now() - startTime, ' ms');
+    logger.info('request [' + method + ']: "', url, '" in ', Date.now() - startTime, ' ms');
   }
 };

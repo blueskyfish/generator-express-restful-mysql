@@ -11,6 +11,7 @@
  *
  * @requires app-module-path
  * @requires fs
+ * @requires path
  * @requires <%= shortcut %>/info
  * @requires <%= shortcut %>/args
  * @requires <%= shortcut %>/configure
@@ -26,6 +27,7 @@
 require('app-module-path').addPath(__dirname);
 
 const fs        = require('fs');
+const path      = require('path');
 
 const info      = require('app/info');
 const args      = require('app/args');
@@ -34,7 +36,7 @@ const shutdown  = require('app/shutdown');
 
 
 if (args.isHelp()) {
-  const content = fs.readFileSync('./man.txt');
+  const content = fs.readFileSync(path.join(__dirname, 'man.txt'));
   _printHeaderAndHero();
   console.info(content.toString());
   process.exit(0);
@@ -46,6 +48,7 @@ if (args.isHelp()) {
 const configureOptions = {
   configFilename: args.getConfigFilename(),
   name:       info.getAppName(),
+  path:       args.getLogPath(),
   shutdown: function (name) {
     shutdown.shutdown(name);
     console.info('Server is shutdown with "%s"', name);
@@ -98,8 +101,9 @@ configure(configureOptions)
  * @private
  */
 function _printHeaderAndHero(logger) {
-  if (fs.existsSync('./hero.txt')) {
-    const hero = fs.readFileSync('./hero.txt', 'utf8').toString();
+  const heroFile = path.join(__dirname, 'hero.txt');
+  if (fs.existsSync(heroFile)) {
+    const hero = fs.readFileSync(heroFile, 'utf8').toString();
     const lines = hero.split('\n');
     lines.forEach(function (line) {
       if (logger) {
