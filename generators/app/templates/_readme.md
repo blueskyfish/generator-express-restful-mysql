@@ -16,6 +16,7 @@ _Generates with [Yeoman][yeoman] and the generator <https://github.com/blueskyfi
 	* [Parameters](#user-content-parameters)
 	* [Setting File](#user-content-setting-file)
 * [Home Directory](#user-content-home-directory)
+* [MySql Transaction](#user-content-mysql-transaction)
 * [Logging](#user-content-logging)
 * [Generate Documentation](#user-content-generate-documentation)
 * [License](#user-content-license)
@@ -123,6 +124,50 @@ The home directory is calculated from the configuration filename.
 **Sub Directories**
 
 * `logs` The log files are stored in this directory.
+
+## MySql Transaction
+
+> This is a feature since 0.6.0
+
+The MySql database is supported to work with transaction. Since the version `0.6.0` the module `db.js` is support the transaction.
+
+Here a short example for usage:
+
+* Insert a new user
+* Email address is unique
+
+```js
+/**
+ * @param {object} user a user with the properties "name" and "email".
+ * @return {Q.promise} the promise resolve callback receive the new user id.
+ */
+module.exports.registerUser = function (user) {
+	return db.getTransaction(function (conn) {
+		return conn.beginTransaction()
+			.then(function () {
+				var SQL_INSERT = 'INSERT INTO `users` (name, email) VALUES({name}, {email})';
+				return conn.query(SQL_INSERT, user);
+			})
+			.then(function (result) {
+				return conn.commit(result);
+			})
+			.then(function (result) {
+				return result.insertId;
+			})
+			.fail(function (reason) {
+				return conn.rollback(reason);
+				// or
+				// return conn.rollback({
+				//   code: 'EMAIL_ALREADY_USE',
+				//   message: 'The email is already use'
+				// })
+			})
+			.finally(function () {
+				conn.release();
+			});
+		});
+};
+```
 
 
 ## Logging

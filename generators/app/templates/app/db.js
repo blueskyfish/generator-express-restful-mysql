@@ -30,12 +30,12 @@ const logger     = require('app/logger').getLogger('<%= shortcut %>.db');
 
 /**
  * Creates an connection wrapper
- * @param {PoolConnection} conn
+ * @param {IConnection} conn
  * @constructor
  */
 function Conn(conn) {
   /**
-   * @type {PoolConnection}
+   * @type {IConnection}
    */
   this.conn = conn;
 }
@@ -59,6 +59,110 @@ Conn.prototype.query = function (sql, values) {
  */
 Conn.prototype.release = function () {
   this.conn.release();
+};
+
+/**
+ * Executes a sql statement within a transaction bracket.
+ * 
+ * **Example**
+ * 
+ * ```js
+ * db.getConnection()
+ *   .then(function (conn) {
+ *      return conn.beginTransaction()
+ *        .then(function () {
+ *          // (1) put here the transaction needed sql statements
+ *          return conn.query('INSERT INTO ....', values);
+ *          // or multiple sql stements
+ *          // Q.all([
+ *          //    conn.query('INSERT INTO ...', values1),
+ *          //    conn.query('INSERT INTO ...', values2)
+ *          // ])
+ *        })
+ *        .then(function (result) {
+ *          // (2) result is routing through the commit
+ *          return conn.commit(result)
+ *        })
+ *        .then(function (result) {
+ *          // (3) result of the sql statement from (1)
+ *          return result.insertId;
+ *        })
+ *        .fail(function (reason) {
+ *          // (4) error reason is routing through the rollback
+ *          return conn.rollback(reason);
+ *        })
+ *        .finally((function () {
+ *          // (5) release the connection
+ *          conn.release();
+ *        });
+ *   });
+ * ```
+ * 
+ * @return {Q.promise}
+ */
+Conn.prototype.beginTransaction = function () {
+  var done = Q.defer();
+  conn.beginTransaction(function (err) {
+    if (err) {
+      return done.reject({
+        code: 'TRANSACTION_FAILED',
+        message: err.message || '?',
+        errCode: err.code || 'Unknown Error!',
+        errNumber: err.errno || -1,
+        errStack: err.stack || '-',
+        sqlState: err.sqlState || '-'
+      });
+    }
+    done.resolce(true);
+  });
+  return done.promise;
+};
+
+/**
+ * Send a commit to the database.
+ * 
+ * In case of success, the given parameter "result" is routing to the resolve.
+ * 
+ * Example see at Conn#beginTransaction()
+ * 
+ * @param {*} result the query result from the former sql statement.
+ * @return {Q.promise} resolve with the result
+ */
+Conn.prototype.commit = function (result) {
+  var done = Q.defer();
+  this.conn.commit(function (err) {
+    if (err) {
+      done.reject({
+        code: 'COMMIT_FAILED',
+        message: err.message || '?',
+        errCode: err.code || 'Unknown Error!',
+        errNumber: err.errno || -1,
+        errStack: err.stack || '-',
+        sqlState: err.sqlState || '-'
+      });
+    }
+    // routes with resolve the given result
+    return done.resolve(result);
+  });
+  return done.promise;
+};
+
+/**
+ * Send a rollback to the database.
+ * 
+ * Example see at Conn#beginTransaction()
+ *
+ * @param {*} reason the query error from the former sql statement.
+ * @return {Q.promise} reject with the reason
+ *
+ */
+Conn.prototype.rollback = function (reason) {
+  var done = Q.defer();
+  this.conn.rollbach(function () {
+    // routes with rejection the given reason
+    done.reject(reason);
+  });
+  return done.promise;
 };
 
 /**
@@ -173,4 +277,31 @@ function _handleQueryFunc(done, err, rows) {
     logger.trace('[DB] query result: ', rows);
   }
   done.resolve(rows);
+}
+
+/**
+ * Starts a transaction.
+ * 
+ * @param {IConnection} conn 
+ */
+function _beginTransaction(conn) {
+}
+
+function _commit(conn) {
+  var done = Q.defer();
+  
+}
+
+/**
+ * Rollback the last sql action
+ * @param {IConnection} conn
+ * @return {Q.promise}
+ */
+function _rollback(conn) {
+  var done = Q.defer();
+  conn.rollback(function () {
+    // roolback is done
+    done.resolce();
+  });
+  return done.promise;
 }

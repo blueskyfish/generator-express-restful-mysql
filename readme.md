@@ -110,6 +110,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.6.0    | 2017-04-06 | add the transaction for the database service.
 0.5.1    | 2016-10-10 | fixed the about endpoint (`buildTimestamp`) and remove the default server port. server port is required now!
 0.5.0    | 2016-10-10 | add some improvements:<br> - fixed relative path names to absolute path names (hero)<br> - rename config property `logger.config` to `logger.namespaces`<br> - try to load the version.json for the about endpoint.
 0.4.0    | 2016-09-16 | reedit the generator:<br> - generatore jsdoc and apidoc<br> - reedit the executer module: `executor.execute(req, res, function (sender) { sender(promise, propertyName); });`<br> - improve the logger messages.
