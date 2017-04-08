@@ -104,7 +104,7 @@ Conn.prototype.release = function () {
  */
 Conn.prototype.beginTransaction = function () {
   var done = Q.defer();
-  conn.beginTransaction(function (err) {
+  this.conn.beginTransaction(function (err) {
     if (err) {
       return done.reject({
         code: 'TRANSACTION_FAILED',
@@ -115,6 +115,7 @@ Conn.prototype.beginTransaction = function () {
         sqlState: err.sqlState || '-'
       });
     }
+    logger.info('Begin transaction');
     done.resolce(true);
   });
   return done.promise;
@@ -144,6 +145,7 @@ Conn.prototype.commit = function (result) {
       });
     }
     // routes with resolve the given result
+    logger.info('commit transaction');
     return done.resolve(result);
   });
   return done.promise;
@@ -160,8 +162,9 @@ Conn.prototype.commit = function (result) {
  */
 Conn.prototype.rollback = function (reason) {
   var done = Q.defer();
-  this.conn.rollbach(function () {
+  this.conn.rollback(function () {
     // routes with rejection the given reason
+    logger.info('rollback transaction');
     done.reject(reason);
   });
   return done.promise;
