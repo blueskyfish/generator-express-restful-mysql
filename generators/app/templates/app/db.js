@@ -67,6 +67,8 @@ Conn.prototype.release = function () {
  * **Example**
  * 
  * ```js
+ * const db = require('app/db');
+ * 
  * db.getConnection()
  *   .then(function (conn) {
  *      return conn.beginTransaction()
@@ -210,7 +212,26 @@ module.exports.start = function (settings) {
 };
 
 /**
- * Returns an open connection. In case of error a reason object is return in the promise reject callback.
+ * Returns an open connection.
+ * 
+ * **Example**
+ * 
+ * ```js
+ * const db = require('app/db');
+ * 
+ * db.getConnection()
+ *   .then(function (conn) {
+ *     const values = {
+ *       // properties for the sql statement
+ *     };
+ *     return conn.query('SELECT * FROM ...', values)
+ *       .then(function (rows) {
+ *       })
+ *       .finally(function () {
+ *         conn.release();
+ *       });
+ *   });
+ * ```
  *
  * @return {promise} the promise resolve callback has the parameter from type {@link Conn}
  */
@@ -250,6 +271,7 @@ module.exports.getConnection = function () {
  * @param {string} sql the sql statement
  * @param {object} [values] the parameter entity
  * @return {Q.promise} the promise resolve callback has the array of rows from the query.
+ * @deprecated
  */
 module.exports.query = function (sql, values) {
   const done = Q.defer();
@@ -277,31 +299,4 @@ function _handleQueryFunc(done, err, rows) {
     logger.trace('[DB] query result: ', rows);
   }
   done.resolve(rows);
-}
-
-/**
- * Starts a transaction.
- * 
- * @param {IConnection} conn 
- */
-function _beginTransaction(conn) {
-}
-
-function _commit(conn) {
-  var done = Q.defer();
-  
-}
-
-/**
- * Rollback the last sql action
- * @param {IConnection} conn
- * @return {Q.promise}
- */
-function _rollback(conn) {
-  var done = Q.defer();
-  conn.rollback(function () {
-    // roolback is done
-    done.resolce();
-  });
-  return done.promise;
 }

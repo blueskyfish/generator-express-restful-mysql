@@ -14,7 +14,7 @@
  *
  *     const userModel = req.body;
  *     const promise   = service.save(userModel);
- *     const property  = 'result;
+ *     const property  = 'result';
  *
  *     sender(promise, property);
  *   });

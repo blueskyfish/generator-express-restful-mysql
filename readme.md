@@ -110,6 +110,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+0.6.1    | 2017-04-07 | clean up the source code of "db.js". Add some examples in the jsDoc. Set the module.export.query to deprecated, because this method is request an new connection every time.
 0.6.0    | 2017-04-06 | add the transaction for the database service.
 0.5.1    | 2016-10-10 | fixed the about endpoint (`buildTimestamp`) and remove the default server port. server port is required now!
 0.5.0    | 2016-10-10 | add some improvements:<br> - fixed relative path names to absolute path names (hero)<br> - rename config property `logger.config` to `logger.namespaces`<br> - try to load the version.json for the about endpoint.
