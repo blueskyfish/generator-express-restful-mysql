@@ -7,6 +7,8 @@
 
 This is a [Yeoman Generator][yeoman] generates a scaffolding for an application with a restful interface with express and mysql.
 
+> Looking for the generator for ES5? The branch "generator-0-7" find here <https://github.com/blueskyfish/generator-express-restful-mysql/tree/generator-0.7>
+
 **Note** This Yeoman Generator is still construction.
 
 ## Scaffolding
@@ -110,7 +112,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
-1.0.0    | 2017-04-08 | switch the javascript version to ES2016.
+1.0.0    | 2017-04-08 | switch the javascript version to ES2015.
 0.7.0    | 2017-04-07 | update the dependencies. set db#query(string, object) to deprecated. fixed transaction handling
 0.6.1    | 2017-04-07 | clean up the source code of "db.js". Add some examples in the jsDoc. Set the module.export.query to deprecated, because this method is request an new connection every time.
 0.6.0    | 2017-04-06 | add the transaction for the database service.
