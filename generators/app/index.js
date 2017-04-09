@@ -11,22 +11,21 @@ var path = require('path');
 var util = require('util');
 
 var _ = require('lodash');
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var moment = require('moment');
 
-module.exports = generators.Base.extend({
+module.exports = class extends Generator {
 
-  constructor: function () {
-    generators.Base.apply(this, arguments);
+  constructor(args, opts) {
+    super(args, opts);
 
     this.argument('userName', { type: String, required: false, optional: true, desc: 'Your Github user name'});
     this.argument('company', { type : String, required: false, optional: true, desc: 'Your Company'});
-  },
+  }
 
-  prompting: function () {
-    var done = this.async();
-    var defaultEmail = this.userName && this.company ? this.userName + '@' + this.company + '.com' : '';
-    this.prompt([
+  prompting () {
+    const defaultEmail = this.userName && this.company ? this.userName + '@' + this.company + '.com' : '';
+    return this.prompt([
       {
         type: 'input',
         name: 'appName',
@@ -67,11 +66,10 @@ module.exports = generators.Base.extend({
       this.log('   Shortcut:    %s -> %s', this.shortcut, this.appShort);
       this.log('   Github:      %s', this.githubUrl);
       done();
-    }.bind(this));
-  },
+    });
+  }
 
-
-  paths: function () {
+  paths () {
     this.log('Your project path: %s', this.destinationPath());
     var now = moment();
 
@@ -148,20 +146,20 @@ module.exports = generators.Base.extend({
       this._to('apidoc.json'),
       model
     );
-  },
+  }
 
-  _from: function (filename) {
+  _from(filename) {
     return this.templatePath(filename);
-  },
+  }
 
-  _to: function (filename) {
+  _to(filename) {
     if (filename) {
       return this.destinationPath(filename);
     }
     return this.destinationRoot();
-  },
+  }
 
-  _abbreviation: function (name) {
+  _abbreviation(name) {
     var temp = _.kebabCase(name);
     var abb = '';
     for (var index = 0; index < temp.length; index++) {
@@ -175,4 +173,4 @@ module.exports = generators.Base.extend({
     }
     return abb;
   }
-});
+};
