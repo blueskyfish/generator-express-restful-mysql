@@ -7,7 +7,7 @@
 /**
  * Contains the information about the application. It is read from the package.json
  *
- * @module <%= shortcut %>/info
+ * @module <%= shortcut %>/utils/info
  *
  * @requires fs
  * @requires path
@@ -18,14 +18,14 @@
 const fs   = require('fs');
 const path = require('path');
 
-const pkg = require(path.join(__dirname, '..', 'package.json'));
+const pkg = require(path.join(__dirname, '..', '..', 'package.json'));
 
 let version = {};
 
 //
 // try to read the version.json file
 //
-fs.readFile(path.join(__dirname, '..', 'version.json'), 'utf-8', function (err, content) {
+fs.readFile(path.join(__dirname, '..', '..', 'version.json'), 'utf-8', function (err, content) {
   if (!err) {
     try {
       version = JSON.parse(content);

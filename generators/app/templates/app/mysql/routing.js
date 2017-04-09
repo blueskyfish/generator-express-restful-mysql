@@ -8,16 +8,16 @@
  * @module <%= shortcut %>/mysql/mysql-routing
  *
  * @requires express
- * @requires <%= shortcut %>/executor
- * @requires <%= shortcut %>/mysql/mysql-service
+ * @requires <%= shortcut %>/utils/http
+ * @requires <%= shortcut %>/mysql/service
  */
 
 'use strict';
 
 const express      = require('express');
 
-const executor     = require('app/executor');
-const mysqlService = require('app/mysql/mysql-service');
+const httpUtil     = require('app/utils/http');
+const mysqlService = require('app/mysql/service');
 
 //
 // Router: /mysql
@@ -44,7 +44,7 @@ const router = express.Router({
  *     curl -i http://localhost:18080/mysql/show/databases?pattern=Test*DB
  *
  * @apiSuccess {String} status always `okay`
- * @apiSuccess {[]String} database the array with the database names.
+ * @apiSuccess {[]String} databases the array with the database names.
  *
  * @apiSuccessExample {json} Success response
  *     HTTP/1.1 200 OK
@@ -58,13 +58,11 @@ const router = express.Router({
  *     }
  */
 router.get('/show/databases', function (req, res) {
-  executor(req, res, function (sender) {
-    /** @type {ShowDatabasesOptions} */
-    const options = {
-      pattern: req.query.pattern
-    };
-    sender(mysqlService.getDatabaseList(options), 'databases');
-  });
+  /** @type {ShowDatabasesOptions} */
+  const options = {
+    pattern: req.query.pattern
+  };
+  httpUtil.sendResult(req, res, mysqlService.getDatabaseList(options), 'databases');
 });
 
 //

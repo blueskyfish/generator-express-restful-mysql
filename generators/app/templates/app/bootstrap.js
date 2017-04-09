@@ -13,7 +13,7 @@
 /**
  * Bootstrap and configure the application.
  *
- * @module <%= shortcut %>/configure
+ * @module <%= shortcut %>/bootstrap
  *
  * @requires fs
  * @requires path
@@ -68,14 +68,14 @@ module.exports = function bootstrapping (options) {
   const shutdown     = options.shutdown || function () { };
 
   return _readPid(pidPathname)
-    .then(function (pid) {
+    .then((pid) => {
       return _killProcess(pid, stopWaiting);
     })
-    .then(function () {
+    .then(() => {
       // write the current pid of the application
       return _writePid(pidPathname);
     })
-    .then(function () {
+    .then(() => {
       // register the shutdown function
       process.on('SIGINT', function () {
         _shutdown('Ctrl+C', shutdown);
@@ -88,10 +88,11 @@ module.exports = function bootstrapping (options) {
       });
       return true;
     })
-    .then(function () {
+    .then(() => {
       // read the configuration
       return _readConfig(confPathname)
-        .then(function (settings) {
+        .then((settings) => {
+          // add the directory name from the log path
           _.set(settings, 'logger.path', logPath);
           return settings;
         })
@@ -149,7 +150,7 @@ function _checkProcess(pid) {
 }
 
 function _killProcess(pid, stopWaiting) {
-  return new Promis((resolve, reject) {
+  return new Promis((resolve, reject) => {
 
     process.nextTick(function () {
       if (pid <= UNKNOWN_PID || !_checkProcess(pid)) {

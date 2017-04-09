@@ -25,12 +25,12 @@ const _               = require('lodash');
 const bodyParser      = require('body-parser');
 const express         = require('express');
 
-const info            = require('app/info');
+const info            = require('app/utils/info');
 const logger          = require('app/logger').getLogger('<%= shortcut %>');
 
 const measureTime     = require('app/middleware/measure');
 
-const mysqlRouting    = require('app/mysql/mysql-outing');
+const mysqlRouting    = require('app/mysql/routing');
 
 const app = express();
 

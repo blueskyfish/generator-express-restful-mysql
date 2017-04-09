@@ -16,7 +16,7 @@
  * --log=pathname     the pathname to the log files and the place of the pid file
  * ```
  *
- * @module <%= shortcut %>/args
+ * @module <%= shortcut %>/utils/args
  *
  * @requires minimist
  */

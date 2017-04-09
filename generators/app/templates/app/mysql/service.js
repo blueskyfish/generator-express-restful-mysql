@@ -17,7 +17,7 @@
 
 const _      = require('lodash');
 
-const args   = require('app/args');
+const args   = require('app/utils/args');
 const db     = require('app/db');
 const logger = require('app/logger').getLogger('<%= shortcut %>.service');
 

@@ -14,19 +14,17 @@
  * @requires lodash
  * @requires module:bluesky-logger
  * @requires module:bluesky-logger/file-appender
- * @requires module:<%= shortcut %>/info
- * @requires module:<%= shortcut %>/config-util
+ * @requires module:<%= shortcut %>/utils/info
  */
 
 const fs   = require('fs');
 const path = require('path');
 
 const _             = require('lodash');
-
 const loggerFactory = require('bluesky-logger');
 const fileAppender  = require('bluesky-logger/file-appender');
 
-const info          = require('app/info');
+const info          = require('app/utils/info');
 
 const DEFAULT_LOGGER_CONFIG = {
   'root': 'info',
