@@ -11,6 +11,7 @@
  *
  * @requires fs
  * @requires path
+ * @requires lodash
  * @requires module:bluesky-logger
  * @requires module:bluesky-logger/file-appender
  * @requires module:<%= shortcut %>/info
@@ -20,11 +21,12 @@
 const fs   = require('fs');
 const path = require('path');
 
+const _             = require('lodash');
+
 const loggerFactory = require('bluesky-logger');
 const fileAppender  = require('bluesky-logger/file-appender');
 
 const info          = require('app/info');
-const configUtil    = require('app/config-util');
 
 const DEFAULT_LOGGER_CONFIG = {
   'root': 'info',
@@ -32,7 +34,7 @@ const DEFAULT_LOGGER_CONFIG = {
 };
 
 // write the log messages to the console or not.
-var consoleOutput = true;
+let consoleOutput = true;
 
 /**
  * start - Initialize the logger.
@@ -43,11 +45,12 @@ var consoleOutput = true;
 module.exports.start = function (settings) {
   // Logger Configuration
   loggerFactory
-    .config(configUtil.getSetting(settings, 'logger.namespaces', DEFAULT_LOGGER_CONFIG))
-    .setSeparator(configUtil.getSetting(settings, 'logger.separator', '.'));
-  if (configUtil.getSetting(settings, 'logger.appender', 'console') === 'file') {
+    .config(_.get(settings, 'logger.namespaces', DEFAULT_LOGGER_CONFIG))
+    .setSeparator(_.get(settings, 'logger.separator', '.'));
+  
+  if (_.get(settings, 'logger.appender', 'console') === 'file') {
 
-    const logPath = configUtil.getSetting(settings, 'logger.path', '.');
+    const logPath = _.get(settings, 'logger.path', '.');
     if (!fs.existsSync(logPath)) {
       // create the log folder / directory.
       fs.mkdirSync(logPath);

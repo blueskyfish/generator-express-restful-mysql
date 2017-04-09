@@ -11,12 +11,13 @@
  */
 
 /**
- * Configures the application.
+ * Bootstrap and configure the application.
  *
  * @module <%= shortcut %>/configure
  *
  * @requires fs
  * @requires path
+ * @requires util
  * @requires lodash
  * @requires q
  */
@@ -25,6 +26,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const util = require('util');
 
 const _    = require('lodash');
 const Q    = require('q');
@@ -32,16 +34,15 @@ const Q    = require('q');
 const UNKNOWN_PID = 0;
 
 /**
- * @name ConfigureOptions
+ * @name BootstrapOptions
  * @property {string}   [configFilename] the filename of the configuration file.
  * @property {string}   [name] the name of the application
  * @property {string}   [path] the path to the pid file.
  * @property {function} [shutdown] the function is calling by the signal shutdown.
  */
 
-
 /**
- * Configure the application.
+ * Bootstrap and configures the application.
  *
  * * First step is to stop a former application that pid is written in PID file.
  * * Second step is write the own pid into the PID file
@@ -51,7 +52,7 @@ const UNKNOWN_PID = 0;
  * @param {ConfigureOptions} options the options
  * @return the promise resolve callback has the parameter as a JSON settings instance.
  */
-module.exports = function configure (options) {
+module.exports = function bootstrapping (options) {
   const appName      = options.name || '<%= shortcut %>-server';
   const logPath      = options.path || process.cwd();
 
@@ -97,44 +98,45 @@ module.exports = function configure (options) {
     });
 };
 
+// read the former application pid
 function _readPid(pathname) {
-  const done = Q.defer();
-  fs.readFile(pathname, 'utf8', function (err, content) {
-    if (err) {
-      done.resolve(UNKNOWN_PID);
-      return;
-    }
-    try {
-      done.resolve(parseInt(content, 10));
-    } catch (e) {
-      done.resolve(UNKNOWN_PID);
-    }
+  return new Promise((resolve, reject) => {
+    fs.readFile(pathname, 'utf8', function (err, content) {
+      if (err) {
+        // file is not exist, then use 0
+        return resolve(UNKNOWN_PID);
+      }
+      try {
+        resolve(parseInt(content, 10));
+      } catch (e) {
+        resolve(UNKNOWN_PID);
+      }
+    });
   });
-  return done.promise;
 }
 
 function _readConfig(pathname) {
-  const done = Q.defer();
-  fs.readFile(pathname, 'utf8', function (err, content) {
-    if (err) {
-      return done.reject({
-        code: 'CONFIG_NOT_FOUND',
-        message: 'Could not found the configuration file "' + pathname + '"!',
-        error: err.message || 'no additional information'
-      });
-    }
-    try {
-      const settings = JSON.parse(content);
-      done.resolve(settings);
-    } catch (e) {
-      done.reject({
-        code: 'CONFIG_PARSE',
-        message: 'Invalidate JSON format on "' + pathname + '"!',
-        error: !e ? 'null' : e.message || 'no additional information'
-      });
-    }
+  return new Promise((resolve, reject) => {
+    fs.readFile(pathname, 'utf8', function (err, content) {
+      if (err) {
+        return reject({
+          code: 'CONFIG_NOT_FOUND',
+          message: util.format('Could not found the configuration file "%s"!', pathname),
+          error: err.message || 'no additional information'
+        });
+      }
+      try {
+        const settings = JSON.parse(content);
+        resolve(settings);
+      } catch (e) {
+        reject({
+          code: 'CONFIG_PARSE',
+          message: 'Invalidate JSON format on "' + pathname + '"!',
+          error: !e ? 'null' : e.message || 'no additional information'
+        });
+      }
+    });
   });
-  return done.promise;
 }
 
 function _checkProcess(pid) {
@@ -147,34 +149,31 @@ function _checkProcess(pid) {
 }
 
 function _killProcess(pid, stopWaiting) {
-  var done = Q.defer();
+  return new Promis((resolve, reject) {
 
-  process.nextTick(function () {
-
-    if (pid <= UNKNOWN_PID || !_checkProcess(pid)) {
-      // pid is unknown !!
-      return done.resolve();
-    }
-    console.info('send the signal "SIGTERM" to the other process "%s" !!', pid);
-    if (!_sendKill(pid, 'SIGTERM')) {
-      // error?
-      return done.reject(util.format('Could not terminate the process [%s]', pid));
-    }
-    // wait duration and check whether other process is running
-    setTimeout(function () {
-      console.info('try to send the signal "SIGKILL" to the other process "%s" !!', pid);
-      if (_checkProcess(pid)) {
-        // send the signal "SIGKILL" to the other process!!!
-        if (!_sendKill(pid, 'SIGKILL')) {
-          return done.reject(util.format('Could not kill the process [%s]', pid));
-        }
-        done.resolve();
+    process.nextTick(function () {
+      if (pid <= UNKNOWN_PID || !_checkProcess(pid)) {
+        // pid is unknown !!
+        return resolve();
       }
-      done.resolve();
-    }, stopWaiting);
+      console.info('send the signal "SIGTERM" to the other process "%s" !!', pid);
+      if (!_sendKill(pid, 'SIGTERM')) {
+        // error?
+        return reject(util.format('Could not terminate the process [%s]', pid));
+      }
+      // wait duration and check whether other process is running
+      setTimeout(function () {
+        console.info('try to send the signal "SIGKILL" to the other process "%s" !!', pid);
+        if (_checkProcess(pid)) {
+          // send the signal "SIGKILL" to the other process!!!
+          if (!_sendKill(pid, 'SIGKILL')) {
+            return reject(util.format('Could not kill the process [%s]', pid));
+          }
+        }
+        resolve();
+      }, stopWaiting);
+    });
   });
-
-  return done.promise;
 }
 
 function _sendKill(pid, signal) {
@@ -191,14 +190,14 @@ function _sendKill(pid, signal) {
 // Writes the own pid into the PID file.
 //
 function _writePid(pidFilename) {
-  var done = Q.defer();
-  fs.writeFile(pidFilename, process.pid, 'utf8', function (err) {
-    if (err) {
-      return done.reject(err);
-    }
-    done.resolve();
+  return new Promise((resolve, reject) => {
+    fs.writeFile(pidFilename, process.pid, 'utf8', function (err) {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
   });
-  return done.promise;
 }
 
 function _shutdown(name, cb) {

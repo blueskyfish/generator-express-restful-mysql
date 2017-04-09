@@ -20,7 +20,7 @@ const path = require('path');
 
 const pkg = require(path.join(__dirname, '..', 'package.json'));
 
-var version = {};
+let version = {};
 
 //
 // try to read the version.json file
@@ -35,45 +35,51 @@ fs.readFile(path.join(__dirname, '..', 'version.json'), 'utf-8', function (err, 
   }
 });
 
+/**
+ * Returns the application name
+ * 
+ * @return {string}
+ */
 module.exports.getAppName = function () {
   return pkg.name;
 };
 
+/**
+ * Returns the application title
+ * 
+ * @return {string}
+ */
 module.exports.getAppTitle = function () {
   return pkg.title;
 };
 
+/**
+ * Returns the application version
+ * 
+ * @return {string}
+ */
 module.exports.getAppVersion = function () {
   return pkg.version;
 };
 
+/**
+ * Returns the application vender / author
+ * 
+ * @return {string}
+ */
 module.exports.getAppVendor = function () {
   return pkg.author;
 };
 
+/**
+ * Returns the application description
+ * 
+ * @return {string}
+ */
 module.exports.getAppDescription = function () {
   return pkg.description;
 };
 
-
 module.exports.getBuildTimestamp = function () {
   return version.timestamp || 'unknown';
-};
-
-/**
- * Prints the header information.
- *
- * @param {Logger} [logger] the logger for additional print out the header.
- */
-module.exports.headerPrint = function (logger) {
-  if (logger) {
-    logger.info('"', pkg.title, '" (', pkg.version, ')');
-    logger.info('');
-    if (logger.isConsole) {
-      return;
-    }
-  }
-  console.info('%s (%s)', pkg.title, pkg.version);
-  console.info('  %s', pkg.author);
-  console.info('');
 };

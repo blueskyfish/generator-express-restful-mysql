@@ -5,7 +5,7 @@
  */
 
 /**
- * @module <%= shortcut %>/service/show-databases
+ * @module <%= shortcut %>/mysql/mysql-service
  *
  * @requires lodash
  * @requires module:<%= shortcut %>/args
@@ -49,29 +49,29 @@ const SQL_SHOW_DATABASES_ALL = [
  * @param {ShowDatabasesOptions} options
  * @return {promise} the promise resolve callback has the parameter, that has all databases from mysql server.
  */
-module.exports.execute = function (options) {
+module.exports.getDatabaseList = function (options) {
   return db.getConnection()
-    .then(function (conn) {
+    .then((conn) => {
       const pattern = _preparePattern(options.pattern);
-      var sqlStatement = SQL_SHOW_DATABASES_ALL;
-      var params = {};
+      let sqlStatement = SQL_SHOW_DATABASES_ALL;
+      let params = {};
       if (pattern) {
         params.pattern = pattern;
         sqlStatement = SQL_SHOW_DATABASES_WITH_PATTERN;
       }
       return conn.query(sqlStatement, params)
-        .then(function (databases) {
+        .then((databases) => {
           if (args.isVerbose()) {
             logger.debug('Your databases: ', JSON.stringify(databases));
           }
-          var result = [];
+          let result = [];
           _.forEach(databases, function (db) {
             const name = _.values(db)[0];
             result.push(name);
           });
           return result;
         })
-        .finally(function () {
+        .finally(() => {
           // release the db connection
           conn.release();
         });

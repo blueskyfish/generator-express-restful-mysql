@@ -9,29 +9,28 @@
  *
  * @module <%= shortcut %>/application
  *
+ * @requires lodash
  * @requires body-parser
  * @requires express
- * @requires q
  * @requires module:<%= shortcut %>/info
  * @requires module:<%= shortcut %>/config-util
  * @requires module:<%= shortcut %>/logger
- * @requires module:<%= shortcut %>/middleware
+ * @requires module:<%= shortcut %>/middleware/measure
  * @requires module:<%= shortcut %>/router/mysql
  */
 
 'use strict';
 
+const _               = require('lodash');
 const bodyParser      = require('body-parser');
 const express         = require('express');
-const Q               = require('q');
 
 const info            = require('app/info');
-const configUtil      = require('app/config-util');
 const logger          = require('app/logger').getLogger('<%= shortcut %>');
 
-const middleware      = require('app/middleware');
+const measureTime     = require('app/middleware/measure');
 
-const routerMySQL     = require('app/router/mysql');
+const mysqlRouting    = require('app/mysql/mysql-outing');
 
 const app = express();
 
@@ -50,15 +49,16 @@ module.exports.start = function (settings) {
   // set the application title
   app.set('title', info.getAppTitle());
 
+  //
   // Middlewares...
-
-  app.use(middleware.measureTime());
+  //
+  app.use(measureTime());
 
   app.use(bodyParser.json());
 
-  // Routers...
+  // Routing
 
-  app.use('/mysql', routerMySQL);
+  app.use('/mysql', mysqlRouting);
 
   // TODO Add here your routers
 
@@ -105,23 +105,25 @@ module.exports.start = function (settings) {
   // Starting...
 
   // get the port and host
-  const port = configUtil.getSetting(settings, 'server.port', 0);
-  const host = configUtil.getSetting(settings, 'server.host', DEFAULT_HOST);
+  const port = _.get(settings, 'server.port', 0);
+  const host = _.get(settings, 'server.host', DEFAULT_HOST);
 
-  const done = Q.defer();
+  return new Promise((resolve, reject) => {
+    if (port > 0) {
+      // starts the listening of the express application...
+      app.listen(port, host, function () {
+        logger.info('Server is listen http://', host, ':', port);
+        resolve(true);
+      });
+    } else {
+      // missing the port for the server...
+      process.nextTick(function () {
+        reject({
+          code: 'MISSING_PORT',
+          message: 'Missing the setting property "server.port"!'
+        });
+      });
+    }
 
-  if (port > 0) {
-    // starts the listening of the express application...
-    app.listen(port, host, function () {
-      logger.info('Server is listen http://', host, ':', port);
-      done.resolve(true);
-    });
-  } else {
-    // missing the port for the server...
-    process.nextTick(function () {
-      done.reject('Missing the setting property "server.port"!');
-    });
-  }
-
-  return done.promise;
+  });
 };

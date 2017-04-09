@@ -5,19 +5,19 @@
  */
 
 /**
- * @module <%= shortcut %>/router/mysql
+ * @module <%= shortcut %>/mysql/mysql-routing
  *
  * @requires express
  * @requires <%= shortcut %>/executor
- * @requires <%= shortcut %>/service/show-databases
+ * @requires <%= shortcut %>/mysql/mysql-service
  */
 
 'use strict';
 
-const express = require('express');
+const express      = require('express');
 
-const executor      = require('app/executor');
-const showDatabases = require('app/service/show-databases');
+const executor     = require('app/executor');
+const mysqlService = require('app/mysql/mysql-service');
 
 //
 // Router: /mysql
@@ -58,12 +58,12 @@ const router = express.Router({
  *     }
  */
 router.get('/show/databases', function (req, res) {
-  executor.execute(req, res, function (sender) {
+  executor(req, res, function (sender) {
     /** @type {ShowDatabasesOptions} */
     const options = {
       pattern: req.query.pattern
     };
-    sender(showDatabases.execute(options), 'databases');
+    sender(mysqlService.getDatabaseList(options), 'databases');
   });
 });
 

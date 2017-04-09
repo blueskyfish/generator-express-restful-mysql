@@ -8,9 +8,10 @@
  * Capsules in a Endpoint the service calls and claims Exception
  *
  * **Example**
+ * 
  * ```js
  * router.post('/user', function (req, res) {
- *   executor.execute(req, res, function (sender) {
+ *   executor(req, res, function (sender) {
  *
  *     const userModel = req.body;
  *     const promise   = service.save(userModel);
@@ -30,53 +31,54 @@
 
 'use strict';
 
-const util       = require('util');
+const util = require('util');
 
-const _          = require('lodash');
+const _ = require('lodash');
 
 const httpStatus = require('app/http-status');
 
 /**
  * Executes the service call, send the result to the client and catches the errors.
+ * 
+ * Signature of the callback: `function (sender): void`.
+ * 
  *
  * @param {request}  req the express request
  * @param {response} res the express response
  * @param {function} cb the callback, that collect the answer
  */
-module.exports.execute = function (req, res, cb) {
+module.exports = function (req, res, cb) {
+  
   const url = req.originalUrl;
 
-  function __sender(promise, propertyName) {
-    if (!promise.then) {
-      res.status(httpStatus.SERVER_ERROR)
+  const __sender = function (promise, propertyName) {
+    if (promise || _.isFunction(promise.then)) {
+      return res.status(httpStatus.SERVER_ERROR)
         .send({
           status: 'error',
           message: 'Could not found a result'
         });
-      return;
     }
-    promise.then(
-      function (result) {
-        var data = {
-          status: 'okay'
-        };
-        data[propertyName] = result;
-        res.send(data);
-      },
-      function (reason) {
-        var data = {
-          status: 'error',
-          error: reason
-        };
-        res.status(httpStatus.BAD_REQUEST)
-          .send(data);
-      }
-    );
+
+    // resolve or reject
+    promise.then((result) => {
+      var data = {
+        status: 'okay'
+      };
+      data[propertyName] = result;
+      res.send(data);
+    }, (reason) => {
+      var data = {
+        status: 'error',
+        error: reason
+      };
+      res.status(httpStatus.BAD_REQUEST)
+        .send(data);
+    });
   }
+
   try {
-
     cb(__sender);
-
   } catch (e) {
     e = e.message;
     const message = util.format('[<%= shortcut %>]: %s (%s)', e, url);
