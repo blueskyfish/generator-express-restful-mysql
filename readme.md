@@ -3,7 +3,7 @@
 
 # Generator Express Restful MySQL
 
-> Generates a express restful application with the mysql connection
+> Generates a express restful application with the mysql connection. It use the EM2015 Javascript.
 
 This is a [Yeoman Generator][yeoman] generates a scaffolding for an application with a restful interface with express and mysql.
 
@@ -13,12 +13,12 @@ This is a [Yeoman Generator][yeoman] generates a scaffolding for an application 
 
 ### Requirements
 
-* [Node JS][nodejs] *Tested in version 4.x*
+* [Node JS][nodejs] *Tested in version 6.x*
 * [Yeoman][yeoman]
 
 ### Installation
 
-* Check whether Node JS is installed
+* Check whether Node JS is installed in version 6.x or higher
 * Install the Yeoman global
 * Install this generator
 
@@ -110,6 +110,7 @@ First: read the file `readme.md` in your project.
 
 Version  | date       | Description
 ---------|------------|--------------------
+1.0.0    | 2017-04-08 | switch the javascript version to ES2016.
 0.7.0    | 2017-04-07 | update the dependencies. set db#query(string, object) to deprecated. fixed transaction handling
 0.6.1    | 2017-04-07 | clean up the source code of "db.js". Add some examples in the jsDoc. Set the module.export.query to deprecated, because this method is request an new connection every time.
 0.6.0    | 2017-04-06 | add the transaction for the database service.
