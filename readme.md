@@ -7,6 +7,11 @@
 
 This is a [Yeoman Generator][yeoman] generates a scaffolding for an application with a restful interface with express and mysql.
 
+> This is the branch of the generator-express-restful-mysql until the version 0.7
+> The Javascript in in ES5.
+> Looking for the ES2016 see at the [master branch](https://github.com/blueskyfish/generator-express-restful-mysql).
+```
+
 **Note** This Yeoman Generator is still construction.
 
 ## Scaffolding
