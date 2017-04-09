@@ -50,7 +50,7 @@ module.exports = class extends Generator {
         message: 'Abbreviation for your application',
         default: this._abbreviation(path.basename(process.cwd()))
       }
-    ]).then(function (answers) {
+    ]).then((answers) => {
       this.userLowerName = answers.userName.toLowerCase();
       this.userName = answers.userName;
       this.userEmail = answers.userEmail;
@@ -65,7 +65,6 @@ module.exports = class extends Generator {
       this.log('   Application: %s -> %s', this.appName, this.appTitle);
       this.log('   Shortcut:    %s -> %s', this.shortcut, this.appShort);
       this.log('   Github:      %s', this.githubUrl);
-      done();
     });
   }
 
