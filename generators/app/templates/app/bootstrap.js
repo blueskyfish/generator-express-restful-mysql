@@ -19,7 +19,6 @@
  * @requires path
  * @requires util
  * @requires lodash
- * @requires q
  */
 
 'use strict';
@@ -29,7 +28,6 @@ const path = require('path');
 const util = require('util');
 
 const _    = require('lodash');
-const Q    = require('q');
 
 const UNKNOWN_PID = 0;
 
@@ -150,7 +148,7 @@ function _checkProcess(pid) {
 }
 
 function _killProcess(pid, stopWaiting) {
-  return new Promis((resolve, reject) => {
+  return new Promise((resolve, reject) => {
 
     process.nextTick(function () {
       if (pid <= UNKNOWN_PID || !_checkProcess(pid)) {

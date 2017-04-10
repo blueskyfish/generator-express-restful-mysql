@@ -12,8 +12,8 @@
  * @requires app-module-path
  * @requires fs
  * @requires path
- * @requires <%= shortcut %>/info
- * @requires <%= shortcut %>/args
+ * @requires <%= shortcut %>/utils/info
+ * @requires <%= shortcut %>/utils/args
  * @requires <%= shortcut %>/bootstrap
  * @requires <%= shortcut %>/shutdown
  */
@@ -29,8 +29,8 @@ require('app-module-path').addPath(__dirname);
 const fs = require('fs');
 const path = require('path');
 
-const info = require('app/info');
-const args = require('app/args');
+const info = require('app/utils/info');
+const args = require('app/utils/args');
 const bootstrap = require('app/bootstrap');
 const shutdown = require('app/shutdown');
 

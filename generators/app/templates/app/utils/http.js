@@ -12,6 +12,8 @@
 
 'use strict';
 
+const _ = require('lodash');
+
 let httpStatus = {};
 
 Object.defineProperty(httpStatus, 'OKAY', { value: 200, writable: false, enumerable: true });

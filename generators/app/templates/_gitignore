@@ -8,11 +8,14 @@
 .idea/
 *.iml
 
+# VS Code
+.vscode
+
 # Node & NPM
 node_modules/
 npm-debug.log
 
-# JSDoc
+# JSDoc & APIDoc
 jsdoc/
 apidoc/
 
