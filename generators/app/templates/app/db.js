@@ -271,6 +271,7 @@ module.exports.start = function (settings) {
  *        return _groupingResult(rows);
  *     });
  * });
+ * ```
  * 
  * ExecuteFunction: `function (conn: Conn): Promise<*>`.
  *

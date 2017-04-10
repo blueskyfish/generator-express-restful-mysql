@@ -5,7 +5,9 @@
  */
 
 /**
- * @module <%= shortcut %>/mysql/mysql-routing
+ * @module <%= shortcut %>/mysql/routing
+ * @description
+ * Routing methods for mysql.
  *
  * @requires express
  * @requires <%= shortcut %>/utils/http

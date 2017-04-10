@@ -5,10 +5,10 @@
  */
 
 /**
- * @module <%= shortcut %>/mysql/mysql-service
+ * @module <%= shortcut %>/mysql/service
  *
  * @requires lodash
- * @requires module:<%= shortcut %>/args
+ * @requires module:<%= shortcut %>/utils/args
  * @requires module:<%= shortcut %>/db
  * @requires module:<%= shortcut %>/logger
  */
