@@ -85,17 +85,16 @@ Your project path: /playground/simple-microservice
    create readme.md
    create logo.png
    create app/application.js
-   create app/args.js
-   create app/config-util.js
-   create app/configure.js
+   create app/bootstrap.js
    create app/db.js
-   create app/http-status.js
-   create app/info.js
    create app/logger.js
-   create app/middleware.js
-   create app/router/mysql.js
-   create app/service/show-databases.js
+   create app/middleware/measure.js
+   create app/mysql/routing.js
+   create app/mysql/service.js
    create app/shutdown.js
+   create app/utils/args.js
+   create app/utils/http.js
+   create app/utils/info.js
    create server.js
    create man.txt
    create hero.txt
@@ -136,7 +135,7 @@ Version  | date       | Description
 ```
 The MIT License (MIT)
 
-Copyright (c) 2016 BlueSkyFish
+Copyright (c) 2017 BlueSkyFish
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
