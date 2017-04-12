@@ -17,8 +17,6 @@
       "<%= shortcut %>": "debug",
       "<%= shortcut %>.db": "debug",
       "<%= shortcut %>.middleware": "debug",
-      "<%= shortcut %>.metric": "info",
-      "<%= shortcut %>.executor": "info",
       "<%= shortcut %>.service": "debug",
       "<%= shortcut %>.shutdown": "info"
     },

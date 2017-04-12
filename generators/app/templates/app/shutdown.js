@@ -1,7 +1,7 @@
 /*
- * Temperature Monitor Server - https://github.com/blueskyfish/temperature-monitor-server.git
+ * <%= appTitle %> - <%= githubUrl %>
  *
- * Copyright (c) 2016 BlueSkyFish
+ * Copyright (c) <%= year %> <%= userName %>
  */
 
 /**
