@@ -38,7 +38,9 @@ const shutdown = require('app/shutdown');
 if (args.isHelp()) {
   const content = fs.readFileSync(path.join(__dirname, 'man.txt'));
   _printHero();
+  /* eslint-disable */
   console.info(content.toString());
+  /* eslint-enable */
   process.exit(0);
 }
 
@@ -51,7 +53,9 @@ const bootstrapOptions = {
   path: args.getLogPath(),
   shutdown: (name) => {
     shutdown.shutdown(name);
+    /* eslint-disable */
     console.info('Server is shutdown with "%s"', name);
+    /* eslint-enable */
   }
 };
 
@@ -88,12 +92,16 @@ bootstrap(bootstrapOptions)
       if (logger) {
         logger.warn('[<%= shortcut %>] ', e);
       } else {
+        /* eslint-disable */
         console.warn('[<%= shortcut %>] ', e);
+        /* eslint-enable */
       }
     }
   }, (reason) => {
+    /* eslint-disable */
     console.warn('[%s] %s', reason.code || 'UNKNOWN', reason.message || 'Unknown message');
     console.warn('[%s] object -> %s', reason.code || 'UNKNOWN', JSON.stringify(reason));
+    /* eslint-enable */
   });
 
 /**
@@ -114,7 +122,9 @@ function _printHero(logger) {
           return;
         }
       }
+      /* eslint-disable */
       console.info(line);
+      /* eslint-enable */
     });
   }
 }
@@ -134,7 +144,9 @@ function _printHeader(logger) {
       return;
     }
   }
+  /* eslint-disable */
   console.info('%s (%s)', info.getAppTitle(), info.getAppVersion());
   console.info('  %s', info.getAppVendor());
   console.info('');
-};
+  /* eslint-enable */
+}

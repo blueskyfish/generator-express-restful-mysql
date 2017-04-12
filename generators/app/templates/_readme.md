@@ -139,31 +139,28 @@ Here a short example for usage:
 ```js
 /**
  * @param {object} user a user with the properties "name" and "email".
- * @return {Q.promise} the promise resolve callback receive the new user id.
+ * @return {Promise<number>}
  */
 module.exports.registerUser = function (user) {
-	return db.getTransaction(function (conn) {
+	return db.execute((conn) => {
 		return conn.beginTransaction()
-			.then(function () {
+			.then(() => {
 				var SQL_INSERT = 'INSERT INTO `users` (name, email) VALUES({name}, {email})';
 				return conn.query(SQL_INSERT, user);
 			})
-			.then(function (result) {
+			.then((result) => {
 				return conn.commit(result);
 			})
-			.then(function (result) {
+			.then((result) => {
 				return result.insertId;
 			})
-			.fail(function (reason) {
+			.catch((reason) => {
 				return conn.rollback(reason);
 				// or
 				// return conn.rollback({
 				//   code: 'EMAIL_ALREADY_USE',
 				//   message: 'The email is already use'
 				// })
-			})
-			.finally(function () {
-				conn.release();
 			});
 		});
 };

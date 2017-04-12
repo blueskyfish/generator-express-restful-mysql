@@ -2,8 +2,6 @@
  * <%= appTitle %> - <%= githubUrl %>
  *
  * Copyright (c) <%= year %> <%= userName %>
- *
- * Purpose:
  */
 
 /**

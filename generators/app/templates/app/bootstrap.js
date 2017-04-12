@@ -99,7 +99,7 @@ module.exports = function bootstrapping (options) {
 
 // read the former application pid
 function _readPid(pathname) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fs.readFile(pathname, 'utf8', function (err, content) {
       if (err) {
         // file is not exist, then use 0
@@ -155,14 +155,18 @@ function _killProcess(pid, stopWaiting) {
         // pid is unknown !!
         return resolve();
       }
+      /* eslint-disable */
       console.info('send the signal "SIGTERM" to the other process "%s" !!', pid);
+      /* eslint-enable */
       if (!_sendKill(pid, 'SIGTERM')) {
         // error?
         return reject(util.format('Could not terminate the process [%s]', pid));
       }
       // wait duration and check whether other process is running
       setTimeout(function () {
+        /* eslint-disable */
         console.info('try to send the signal "SIGKILL" to the other process "%s" !!', pid);
+        /* eslint-enable */
         if (_checkProcess(pid)) {
           // send the signal "SIGKILL" to the other process!!!
           if (!_sendKill(pid, 'SIGKILL')) {
@@ -204,7 +208,9 @@ function _shutdown(name, cb) {
     cb(name);
   }
   catch (e) {
+    /* eslint-disable */
     console.warn('Error has occurred: %s', e.message);
+    /* eslint-enable */
   }
   finally {
     process.exit();

@@ -12,16 +12,18 @@
  * @requires lodash
  * @requires mysql
  * @requires module:<%= shortcut %>/utils/args
+ * @requires module:<%= shortcut %>/utils/commons
  * @requires module:<%= shortcut %>/logger
  */
 
 'use strict';
 
-const _      = require('lodash');
-const mysql  = require('mysql');
+const _       = require('lodash');
+const mysql   = require('mysql');
 
-const args   = require('app/utils/args');
-const logger = require('app/logger').getLogger('<%= shortcut %>.db');
+const args    = require('app/utils/args');
+const commons = require('app/utils/commons');
+const logger  = require('app/logger').getLogger('<%= shortcut %>.db');
 
 /**
  * The class **Conn** is a wrapper around the mysql connection.
@@ -77,7 +79,7 @@ class Conn {
   queryFirst(sql, values, errMessage) {
     return this.query(sql, values)
       .then((rows) => {
-        if (row && _.isArray(rows) && _.size(row) > 0) {
+        if (rows && _.isArray(rows) && _.size(rows) > 0) {
           return rows[0];
         }
         return Promise.reject(errMessage);
@@ -137,7 +139,7 @@ class Conn {
         resolve(true);
       });
     });
-  };
+  }
 
   /**
    * Send a commit to the database.
@@ -190,7 +192,7 @@ class Conn {
         reject(reason);
       });
     });
-  };
+  }
 
 }
 
