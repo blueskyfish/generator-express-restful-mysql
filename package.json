@@ -18,7 +18,7 @@
     "restful"
   ],
   "dependencies": {
-    "lodash": "4.17.4",
+    "lodash": "4.17.19",
     "moment": "2.18.1",
     "yeoman-generator": "1.1.1"
   }
