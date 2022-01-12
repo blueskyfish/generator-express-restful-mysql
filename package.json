@@ -1,6 +1,6 @@
 {
   "name": "generator-express-restful-mysql",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generates a express restful application with the mysql connection (Use ES2015)",
   "author": "BlueSkyFish <blueskyfish@kirchnerei.de>",
   "repository": {
@@ -18,8 +18,12 @@
     "restful"
   ],
   "dependencies": {
-    "lodash": "4.17.19",
-    "moment": "2.27.0",
-    "yeoman-generator": "1.1.1"
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "yeoman-generator": "^5.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^14.18.5",
+    "@types/lodash": "^4.14.178"
   }
 }

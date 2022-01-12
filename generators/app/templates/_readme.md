@@ -59,31 +59,29 @@ Deploying of the application needs some settings on the computer machine.
 
 ### Parameters
 
-Name                      | Type    | Required | Description
---------------------------|---------|----------|-------------------------------------------
-`--verbose` | `-v`        | boolean | no       | Show more logging messages
-`--help`                  | boolean | no       | Shows the help
-`--log=/path/of/loggging` | string  | yes      | Contains the directory how the log messages are written.
-`--config=/path/to`       | string  | yes      | The filename with the path to the configuration json file.
-
+| Name                      | Type    | Required | Description                                                |
+|---------------------------|---------|----------|------------------------------------------------------------|
+| `--verbose`, `-v`         | boolean | no       | Show more logging messages                                 |
+| `--help`                  | boolean | no       | Shows the help                                             |
+| `--log=/path/of/loggging` | string  | yes      | Contains the directory how the log messages are written.   |
+| `--config=/path/to`       | string  | yes      | The filename with the path to the configuration json file. |
 
 ### Setting File
 
 > An Example of the settings is finding at `settings.example.json`
 
-Name                | Type    | Default     | Description
---------------------|---------|-------------|------------------------------------------
-`server.host`       | string  | `localhost` | The server host for listening.
-`server.port`       | number  |             | The server port for listening. The server port is required now!
-`db.host`           | string  | `localhost` | The database host.
-`db.port`           | number  | `3306`      | The database port.
-`db.user`           | string  |             | The database user.
-`db.password`       | string  |             | The password for the database user.
-`db.database`       | string  |             | The database name.
-`logger.namespaces` | object  |             | The namespace configuration of the logger.
-`logger.separator`  | string  | `.`         | The separator for the namespace.
-`logger.appender`   | string  | `console`   | The appender setting (`console` or `file`).
-
+| Name                | Type   | Default     | Description                                                     |
+|---------------------|--------|-------------|-----------------------------------------------------------------|
+| `server.host`       | string | `localhost` | The server host for listening.                                  |
+| `server.port`       | number |             | The server port for listening. The server port is required now! |
+| `db.host`           | string | `localhost` | The database host.                                              |
+| `db.port`           | number | `3306`      | The database port.                                              |
+| `db.user`           | string |             | The database user.                                              |
+| `db.password`       | string |             | The password for the database user.                             |
+| `db.database`       | string |             | The database name.                                              |
+| `logger.namespaces` | object |             | The namespace configuration of the logger.                      |
+| `logger.separator`  | string | `.`         | The separator for the namespace.                                |
+| `logger.appender`   | string | `console`   | The appender setting (`console` or `file`).                     |
 
 **Example:**
 

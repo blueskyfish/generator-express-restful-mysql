@@ -109,26 +109,27 @@ First: read the file `readme.md` in your project.
 
 ## History
 
-Version  | date       | Description
----------|------------|--------------------
-1.0.0    | 2017-04-08 | switch the javascript version to ES2015.<br>This version is still construction 
-0.7.0    | 2017-04-07 | update the dependencies. set db#query(string, object) to deprecated. fixed transaction handling
-0.6.1    | 2017-04-07 | clean up the source code of "db.js". Add some examples in the jsDoc. Set the module.export.query to deprecated, because this method is request an new connection every time.
-0.6.0    | 2017-04-06 | add the transaction for the database service.
-0.5.1    | 2016-10-10 | fixed the about endpoint (`buildTimestamp`) and remove the default server port. server port is required now!
-0.5.0    | 2016-10-10 | add some improvements:<br> - fixed relative path names to absolute path names (hero)<br> - rename config property `logger.config` to `logger.namespaces`<br> - try to load the version.json for the about endpoint.
-0.4.0    | 2016-09-16 | reedit the generator:<br> - generatore jsdoc and apidoc<br> - reedit the executer module: `executor.execute(req, res, function (sender) { sender(promise, propertyName); });`<br> - improve the logger messages.
-0.3.3    | 2016-09-16 | update the dependency modules. Improve the readme.md
-0.3.2    | 2016-09-03 | update the dependencies modules in the generator. Fixed some spellings.
-0.3.1    | 2016-08-21 | fixed: copy missing the jsdoc-config.json
-0.3.0    | 2016-08-20 | change the startup and the settings behaviours. add a mysql example
-0.2.2    | 2016-07-21 | fixed readme property
-0.2.1    | 2016-04-21 | fixed the db pool settings.
-0.2.0    | 2016-04-19 | reedit the start phase and add an eventBus.
-0.1.1    | 2016-04-13 | fixed some bugs and add the man.txt file for helping.
-0.1.0    | 2016-03-17 | decouple the encrypt and decrypt call from the settings
-0.0.2    |            | update readme file
-0.0.1    |            | Initial publishing
+| Version | date       | Description                                                                                                                                                                                                         |
+|---------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.0.1   | 2022-01-12 | Fixed the **CVE-2021-23337** for `lodash`                                                                                                                                                                           |
+| 1.0.0   | 2017-04-08 | switch the javascript version to ES2015.<br>This version is still construction                                                                                                                                      |
+| 0.7.0   | 2017-04-07 | update the dependencies. set db#query(string, object) to deprecated. fixed transaction handling                                                                                                                     |
+| 0.6.1   | 2017-04-07 | clean up the source code of "db.js". Add some examples in the jsDoc. Set the module.export.query to deprecated, because this method is request an new connection every time.                                        |
+| 0.6.0   | 2017-04-06 | add the transaction for the database service.                                                                                                                                                                       |
+| 0.5.1   | 2016-10-10 | fixed the about endpoint (`buildTimestamp`) and remove the default server port. server port is required now!                                                                                                        |
+| 0.5.0   | 2016-10-10 | add some improvements:<br> - fixed relative path names to absolute path names (hero)<br> - rename config property `logger.config` to `logger.namespaces`<br> - try to load the version.json for the about endpoint. |
+| 0.4.0   | 2016-09-16 | reedit the generator:<br> - generatore jsdoc and apidoc<br> - reedit the executer module: `executor.execute(req, res, function (sender) { sender(promise, propertyName); });`<br> - improve the logger messages.    |
+| 0.3.3   | 2016-09-16 | update the dependency modules. Improve the readme.md                                                                                                                                                                |
+| 0.3.2   | 2016-09-03 | update the dependencies modules in the generator. Fixed some spellings.                                                                                                                                             |
+| 0.3.1   | 2016-08-21 | fixed: copy missing the jsdoc-config.json                                                                                                                                                                           |
+| 0.3.0   | 2016-08-20 | change the startup and the settings behaviours. add a mysql example                                                                                                                                                 |
+| 0.2.2   | 2016-07-21 | fixed readme property                                                                                                                                                                                               |
+| 0.2.1   | 2016-04-21 | fixed the db pool settings.                                                                                                                                                                                         |
+| 0.2.0   | 2016-04-19 | reedit the start phase and add an eventBus.                                                                                                                                                                         |
+| 0.1.1   | 2016-04-13 | fixed some bugs and add the man.txt file for helping.                                                                                                                                                               |
+| 0.1.0   | 2016-03-17 | decouple the encrypt and decrypt call from the settings                                                                                                                                                             |
+| 0.0.2   |            | update readme file                                                                                                                                                                                                  |
+| 0.0.1   |            | Initial publishing                                                                                                                                                                                                  |
 
 ## License
 
